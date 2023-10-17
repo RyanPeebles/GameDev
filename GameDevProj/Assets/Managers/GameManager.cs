@@ -6,17 +6,37 @@ public class GameManager : MonoBehaviour
 {
 
      public static GameManager instance;
+     public GameState GameState;
     // Start is called before the first frame update
     void Awake()
     {
         instance = this;
     }
+    void Start(){
+        changeState(GameState.SpawnUnits);
+    }
 
-    // Update is called once per frame
+    public void changeState(GameState newState){
+        GameState = newState;
+        switch(GameState){
+            case GameState.SpawnUnits:
+                break;
+            case GameState.SpawnItems:
+                break;
+            case GameState.GameOver:
+                break;
+            case GameState.intoStealth:
+                break;
+            case GameState.outOfStealth:
+                break;
+        }
+    }
   
 }
  public enum GameState{
     SpawnUnits,
     SpawnItems,
-    GameOver
+    GameOver,
+    intoStealth,
+    outOfStealth
  }
