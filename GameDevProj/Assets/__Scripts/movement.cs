@@ -59,7 +59,7 @@ public class movement : basePlayer
         }
         if (Input.GetKey("left"))
         {
-            Debug.Log(Instance.character.skinsList.Count);
+           
             this.changeSkin("left");
             tr.Translate(new Vector3(-1f, 0, 0) * Time.deltaTime);
         }
