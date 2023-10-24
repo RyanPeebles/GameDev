@@ -24,6 +24,7 @@ public class vision : MonoBehaviour
        
         
     }
+
     IEnumerator castRays(GameObject g){
 
         
