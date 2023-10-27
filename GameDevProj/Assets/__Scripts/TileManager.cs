@@ -11,8 +11,8 @@ public class TileManager : MonoBehaviour
     public static Tilemap map;
     public GameObject tmap;
 
-    public static Dictionary<String,tileInfo> tileList;
-    public TileManager Instance;
+    [SerializeField]public static Dictionary<String,tileInfo> tileList;
+    [SerializeField]public TileManager Instance;
     //public tileInfo ti;
  
     
@@ -42,7 +42,7 @@ public class TileManager : MonoBehaviour
                 {
                     String name = $"{n},{p}";
 
-                    Debug.Log(name);
+                    //Debug.Log(name);
                     TileBase t = map.GetTile(localPlace);
                     var ti = tileInfo.CreateInstance<tileInfo>();
                     t.name = name;

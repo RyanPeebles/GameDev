@@ -46,13 +46,16 @@ public class vision : MonoBehaviour
 
     }
     public void follow(Vector3Int targ){
+        Debug.Log("following");
         Vector3Int start = new Vector3Int((int)Instance.gaurd.transform.position.x,(int)Instance.gaurd.transform.position.y,0);
         var startTile = TileManager.map.GetTile(start);
         var endTile = TileManager.map.GetTile(targ);
         Instance.path = TileManager.FindPath(startTile, endTile);
        
             foreach(var tile in path){
-               // this.gaurd.transform.position = Vector2.MoveTowards(this.gaurd.transform.position, tile.transform.pos,8f*Time.deltaTime);
+                var toTileInfo = TileManager.tileList[tile.name];
+                
+               this.gaurd.transform.position = Vector2.MoveTowards(this.gaurd.transform.position, toTileInfo.pos ,8f*Time.deltaTime);
             }
         
 
@@ -65,7 +68,8 @@ public class vision : MonoBehaviour
         go = c.gameObject;
         Debug.Log("hit");
         inView.Add(go);
-        StartCoroutine(castRays(go));
+        Instance.follow(new Vector3Int((int)go.transform.position.x,(int)go.transform.position.y,0));
+        //StartCoroutine(castRays(go));
        // inView.push(c.gameObject);
         /*
         Vector2 direction = c.gameObject.character.pos - Instance.character.pos;

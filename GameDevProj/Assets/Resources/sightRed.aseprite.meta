@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b873f1eae7fa02a41928ecbf8f2507b3
+guid: 494df74f05975bd44887f20466e22538
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -73,7 +73,7 @@ ScriptedImporter:
   previousAsepriteImporterSettings:
     fileImportMode: 0
     importHiddenLayers: 0
-    layerImportMode: 0
+    layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
@@ -85,7 +85,7 @@ ScriptedImporter:
   asepriteImporterSettings:
     fileImportMode: 0
     importHiddenLayers: 0
-    layerImportMode: 0
+    layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
@@ -95,7 +95,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638338459602328765
+  platformSettingsDirtyTick: 638338459434378341
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -119,18 +119,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: sight
+  - name: sightRed
     originalName: 
-    pivot: {x: 0.5, y: 0.0028248588}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 354
-      height: 354
-    spriteID: 5241dc96c967d454babca6b422a42838
+      width: 352
+      height: 352
+    spriteID: e25012c102f61394a989b2586dd6f00a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -140,7 +140,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
   spriteSheetImportData:
-  - name: sight_0
+  - name: sightRed_0
     originalName: 
     pivot: {x: 0, y: 0}
     alignment: 0
@@ -149,9 +149,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 354
-      height: 354
-    spriteID: 4cc039850dda05a46aa6a639c1cb6eb7
+      width: 352
+      height: 352
+    spriteID: 6d900bc19ce8d344c970cf31bc287145
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -162,20 +162,20 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   asepriteLayers:
   - layerIndex: 0
-    guid: 1317222744
-    name: Layer 1
-    layerFlags: 3
+    guid: 1879358706
+    name: sightRed
+    layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Layer 1
+    - name: sightRed
       frameIndex: 0
       cellRect:
-        x: -1
-        y: -1
-        width: 354
-        height: 354
-      spriteId: 0d52ad40bf8ed8b4c91796bae1dfd341
+        x: 0
+        y: 0
+        width: 352
+        height: 352
+      spriteId: e25012c102f61394a989b2586dd6f00a
     linkedCells: []
     parentIndex: -1
   platformSettings:

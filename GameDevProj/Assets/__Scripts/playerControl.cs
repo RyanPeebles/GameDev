@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class playerControl : MonoBehaviour
+public class playerControl : basePlayer
 {
     public int goldValue = 0;
     public Rigidbody2D rigid;
@@ -48,6 +48,10 @@ public class playerControl : MonoBehaviour
             pickupable = true;
             item = coll.gameObject.GetComponent<BaseItem>();
             item2 = coll.gameObject;
+        }
+        if(coll.gameObject.tag == "Floor"){
+            tileInfo temp = TileManager.tileList[coll.gameObject.name];
+             this.character.tile = temp.tile;
         }
 
     }
