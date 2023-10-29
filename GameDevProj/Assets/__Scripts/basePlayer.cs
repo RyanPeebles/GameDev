@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 //data unique to players
-public class basePlayer : MonoBehaviour
+public class basePlayer : baseUnit
 {
     public ScriptableChar character;
     

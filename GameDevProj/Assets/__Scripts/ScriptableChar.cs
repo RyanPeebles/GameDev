@@ -10,6 +10,7 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "_Prefabs", menuName = "ScriptableObjects/scriptableCharacter", order = 1)]
 public class ScriptableChar : ScriptableObject
 {
+    public baseUnit unitPrefab;
    public type Type;
    public skins Skin;
    public Vector3 pos;

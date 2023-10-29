@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class playerControl : basePlayer
 {
@@ -10,6 +11,7 @@ public class playerControl : basePlayer
     public TMP_Text text;
     private bool pickupable = false;
     private GameObject item2;
+    [SerializeField]private GameObject Instance;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,7 @@ public class playerControl : basePlayer
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
         text.text = "Gold: " + goldValue;
+        Instance = this.gameObject;
     }
 
     // Update is called once per frame
@@ -50,8 +53,13 @@ public class playerControl : basePlayer
             item2 = coll.gameObject;
         }
         if(coll.gameObject.tag == "Floor"){
-            tileInfo temp = TileManager.tileList[coll.gameObject.name];
-             this.character.tile = temp.tile;
+            Debug.Log(coll.gameObject.name);
+            var temp = TileManager.tileList[coll.gameObject.name];
+            Debug.Log(temp.Name);
+           // Debug.Log(temp.tile);
+            tile = TileManager.map.GetTile(temp.pos);
+            Debug.Log("Tile: " + tile);
+            
         }
 
     }

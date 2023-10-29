@@ -11,10 +11,15 @@ public class fov : MonoBehaviour
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         daddy = this.transform.parent.gameObject;
+        
     }
     private void Update(){
         float Fov = 90f;
-        Vector3 Origin = Vector3.zero;
+        Vector3 Origin = daddy.transform.position;
+       
+
+        Vector3 OriginLocal = transform.InverseTransformPoint(Origin);
+        //Debug.Log("Origin !!!!!!!!!!! " + Origin);
         int rayCount = 50;
         float angle = 30f;
         float angleIncrease = Fov / rayCount;
@@ -25,7 +30,7 @@ public class fov : MonoBehaviour
         Vector2[] uv = new Vector2[vertices.Length];
         int[] triangles = new int[rayCount * 3];
 
-        vertices[0]=Origin;
+        vertices[0]=OriginLocal;
        int vertexIndex = 1;
        int triangleIndex = 0;
         for(int i = 0; i <= rayCount; i ++){
@@ -34,14 +39,19 @@ public class fov : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(Origin, GetVectorFromAngle(angle) ,viewDistance);
             if(hit.collider == null){
                 //Debug.Log("miss");
-                vertex = Origin +(GetVectorFromAngle(angle) * viewDistance);
+                vertex = OriginLocal +(GetVectorFromAngle(angle) * viewDistance);
             }
             else{
-                Debug.Log("hit");
-                Debug.Log(hit.collider);
-                vertex = hit.point;
-                Debug.Log(hit.point);
+                //Debug.Log("hit");
+                //Debug.Log(hit.collider);
+                vertex = transform.InverseTransformPoint(hit.point);
+               // Debug.Log(hit.point);
                 //Debug.Log(hit.transform.position);
+                if(hit.collider.gameObject.tag == "Player"){
+                    var b_gaurd = daddy.GetComponent<baseGaurd>();
+                    //b_gaurd.path = TileManager.FindPath(b_gaurd.character.tile, hit.collider.gameObject.GetComponent<baseUnit>().tile);
+                   // b_gaurd.move();
+                }
             }
             vertices[vertexIndex] = vertex;
 
@@ -62,7 +72,7 @@ public class fov : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
-        Debug.Log("mesh placed");
+        //Debug.Log("mesh placed");
 
     }
 

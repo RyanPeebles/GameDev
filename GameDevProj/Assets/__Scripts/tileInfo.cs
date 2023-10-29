@@ -9,14 +9,17 @@ using System.Linq;
 [CreateAssetMenu(fileName = "_Prefabs", menuName = "ScriptableObjects/tileInfo", order =1)]
 public class tileInfo : ScriptableObject{
 
-    public void Init(Vector3 vc, String N, TileBase t){
+    public void Init(Vector3Int vc, String N, GameObject obg){
         this.pos = vc;
         this.Name = N;
-        this.tile = t;
+        
+        this.obj = obg;
     }
+    public GameObject obj;
+    public BoxCollider2D col;
     public String Name;
-    public Vector3 pos;
-   public TileBase tile;
+    public Vector3Int pos;
+  
    public float G {get; private set;}
     public float H {get; private set;}
     public float F => G + H;
@@ -28,6 +31,17 @@ public class tileInfo : ScriptableObject{
             new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, -1), new Vector2(1, 0),
             new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, -1), new Vector2(-1, 1)
         };
+    public void SetColl(){
+        col= obj.GetComponent<BoxCollider2D>();
+        String s = "Floor";
+        col.tag = s;
+        col.isTrigger=(true);
+        col.includeLayers = 4;
+        //col.offset = new Vector2(.5f,.5f);
+    }
+    public void SetLayer(){
+        obj.layer = 2;
+    }
 
     public void SetConnection(TileBase tile){
         Connection = tile;
