@@ -44,24 +44,24 @@ public class movement : basePlayer
         if (Input.GetKey("right"))
         {
             this.changeSkin("right");
-            tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
+            tr.Translate(new Vector3(3f, 0, 0) * Time.deltaTime);
         }
         if (Input.GetKey("up"))
         {
             this.changeSkin("up");
-            tr.Translate(new Vector3(0f, 1f, 0) * Time.deltaTime);
+            tr.Translate(new Vector3(0f, 3f, 0) * Time.deltaTime);
         }
         if (Input.GetKey("down"))
         {
             this.changeSkin("down");
 
-            tr.Translate(new Vector3(0f, -1f, 0) * Time.deltaTime);
+            tr.Translate(new Vector3(0f, -3f, 0) * Time.deltaTime);
         }
         if (Input.GetKey("left"))
         {
             Debug.Log(Instance.character.skinsList.Count);
             this.changeSkin("left");
-            tr.Translate(new Vector3(-1f, 0, 0) * Time.deltaTime);
+            tr.Translate(new Vector3(-3f, 0, 0) * Time.deltaTime);
         }
 
     }
