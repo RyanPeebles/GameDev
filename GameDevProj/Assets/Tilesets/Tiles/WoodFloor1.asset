@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Repeating Brick Clean
+  m_Name: WoodFloor1
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: b576152d60d19b4429e6a986214b6a64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 286f80a7d43cf94499aa2a4efb9d588c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
