@@ -57,8 +57,9 @@ public class playerControl : basePlayer
             var temp = TileManager.tileList[coll.gameObject.name];
             Debug.Log(temp.Name);
            // Debug.Log(temp.tile);
-            tile = TileManager.map.GetTile(temp.pos);
+            tile = temp.obj;
             Debug.Log("Tile: " + tile);
+            Debug.Log("Tile info " + temp.obj.name);
             
         }
 
