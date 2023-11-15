@@ -4,8 +4,8 @@ public class movement : basePlayer
 {
     public GameManager gm;
     public Transform tr;
-
-    [SerializeField] public basePlayer Instance;
+    public GameObject p;
+     public basePlayer Instance;
 
 
     //public EventSystem es;
@@ -19,12 +19,15 @@ public class movement : basePlayer
         Instance.character.pos = tr.position;
         Instance.stealth = stealth.StandMode;
         Instance.character.skinsList = Resources.LoadAll<Sprite>("Skins").ToList();
+        //p = Instance.transform.parent.gameObject;
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
+      Instance.tile = Instance.GetComponent<playerControl>().tile;
         if (Input.GetKeyDown("c"))
         {
             if (Instance.stealth == stealth.StandMode)

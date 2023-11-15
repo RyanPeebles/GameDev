@@ -9,13 +9,26 @@ public class baseGaurd : baseUnit
     public ScriptableChar character;
     public bool moving = false;
     public TileManager TM;
-    public List<TileBase> path;
-    public TileBase target;
+    public List<GameObject> path;
+    public GameObject target;
+    public direction dir;
+    public Transform tr;
 
     void Start()
     {
+        
     }
     void Update(){
+         if (Input.GetKey("right"))
+        {
+            tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
+        }
+        if(Input.GetKeyDown("up")){
+            this.dir = direction.north;
+        }
+        else if(Input.GetKeyDown("left")){
+            this.dir = direction.east;
+        }
         if(moving == true){
            var t = TileManager.tileList[target.name];
             Vector3 targetPos = new Vector3(t.pos.x,t.pos.y,-1);
@@ -28,20 +41,23 @@ public class baseGaurd : baseUnit
     }
     }
     public void move(){
-         StartCoroutine(walkDaLine());
+         StartCoroutine(this.walkDaLine());
     }
     IEnumerator walkDaLine(){
-        foreach(var tile in path){
-       moving = true;
-       target = tile;
+        Debug.Log(this.path);
+        foreach(var tile in this.path){
+            
+       this.moving = true;
+       this.target = tile;
       yield return new WaitUntil(() => moving == false);
     }
     }
     void OnTriggerEnter2D(Collider2D c){
-        if(c.tag == "Floor"){
-            
+        Debug.Log("hellppp");
+        if(c.gameObject.tag == "Floor"){
+            Debug.Log("this is the one");
             var temp = TileManager.tileList[c.gameObject.name];
-            tile = TileManager.map.GetTile(temp.pos);
+            this.tile = temp.obj;
         }
     }
     
