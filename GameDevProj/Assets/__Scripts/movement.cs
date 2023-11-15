@@ -4,6 +4,7 @@ public class movement : basePlayer
 {
     public GameManager gm;
     public Transform tr;
+    public int speed = 1;
 
     [SerializeField] public basePlayer Instance;
 
@@ -44,24 +45,24 @@ public class movement : basePlayer
         if (Input.GetKey("right"))
         {
             this.changeSkin("right");
-            tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
+            tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime * speed);
         }
         if (Input.GetKey("up"))
         {
             this.changeSkin("up");
-            tr.Translate(new Vector3(0f, 1f, 0) * Time.deltaTime);
+            tr.Translate(new Vector3(0f, 1f, 0) * Time.deltaTime * speed);
         }
         if (Input.GetKey("down"))
         {
             this.changeSkin("down");
 
-            tr.Translate(new Vector3(0f, -1f, 0) * Time.deltaTime);
+            tr.Translate(new Vector3(0f, -1f, 0) * Time.deltaTime * speed);
         }
         if (Input.GetKey("left"))
         {
            
             this.changeSkin("left");
-            tr.Translate(new Vector3(-1f, 0, 0) * Time.deltaTime);
+            tr.Translate(new Vector3(-1f, 0, 0) * Time.deltaTime * speed);
         }
 
     }
