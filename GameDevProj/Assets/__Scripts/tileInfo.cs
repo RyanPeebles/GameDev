@@ -57,12 +57,13 @@ public class tileInfo : ScriptableObject{
 
     public void cacheNeighbors(){
         neighbors = new List<GameObject>();
+        Debug.Log(pos.x + "pos");
+        Debug.Log(pos.y + "pos");
         
-        
-        foreach (var tile in Dirs.Select(dir => TileManager.map.GetTile(new Vector3Int((int)(pos.x + dir.x),(int)(pos.y + dir.y),0))).Where(tile => tile != null)) {
-               // neighbors.Add(TileManager.tileList[tile.name].obj);
-               Debug.Log("neighbors: " + tile.name);
-            }
+        foreach (var tile in Dirs.Select(dir => TileManager.tileList[$"{pos.x + dir.x},{pos.y + dir.y}"])){
+
+        }
+            
 
     }
     public float GetDistance(GameObject tile){

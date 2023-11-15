@@ -12,11 +12,17 @@ public class baseGaurd : baseUnit
     public List<GameObject> path;
     public GameObject target;
     public direction dir;
+    public Transform tr;
 
     void Start()
     {
+        
     }
     void Update(){
+         if (Input.GetKey("right"))
+        {
+            tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
+        }
         if(Input.GetKeyDown("up")){
             this.dir = direction.north;
         }
@@ -35,20 +41,23 @@ public class baseGaurd : baseUnit
     }
     }
     public void move(){
-         StartCoroutine(walkDaLine());
+         StartCoroutine(this.walkDaLine());
     }
     IEnumerator walkDaLine(){
-        foreach(var tile in path){
-       moving = true;
-       target = tile;
+        Debug.Log(this.path);
+        foreach(var tile in this.path){
+            
+       this.moving = true;
+       this.target = tile;
       yield return new WaitUntil(() => moving == false);
     }
     }
     void OnTriggerEnter2D(Collider2D c){
-        if(c.tag == "Floor"){
-            
+        Debug.Log("hellppp");
+        if(c.gameObject.tag == "Floor"){
+            Debug.Log("this is the one");
             var temp = TileManager.tileList[c.gameObject.name];
-            tile = temp.obj;
+            this.tile = temp.obj;
         }
     }
     

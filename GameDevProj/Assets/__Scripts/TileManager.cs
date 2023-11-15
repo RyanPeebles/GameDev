@@ -31,8 +31,7 @@ public class TileManager : MonoBehaviour
     public Dictionary<String,tileInfo> getTiles(){
 
         Dictionary<String,tileInfo> spots = new Dictionary<String,tileInfo>();
-        Debug.Log(map.cellBounds.xMin);
-        Debug.Log(map.cellBounds.yMin);
+       
  
         for (int n = map.cellBounds.xMin; n <= map.cellBounds.xMax; n++)
         {
@@ -40,23 +39,22 @@ public class TileManager : MonoBehaviour
             {
                 Vector3Int localPlace = (new Vector3Int(n, p, (int)map.transform.position.z));
                 Vector3 place = TileManager.map.GetCellCenterWorld(localPlace);
-                //Debug.Log("LP: "+ localPlace);
+                
                 if (map.HasTile(localPlace))
                 {
                     String name = $"{n},{p}";
 
-                    //Debug.Log(name);
                     TileBase t = TileManager.map.GetTile(localPlace);
                     
                     //tileInfo ti = new tileInfo();
                     GameObject go = new GameObject();
                     go.AddComponent<BoxCollider2D>();
                     go.transform.position = place;
-                    //Debug.Log(t);
+                    
                     tileInfo ti = tileInfo.CreateInstance<tileInfo>();
                     //t.name = name;
                     go.name = name;
-                   // Debug.Log("new tile: " + t + " loc: " + localPlace + "worldPos: " + place);
+                   
                     ti.Init(localPlace,t.name,go,t);
                     
                    
@@ -75,7 +73,7 @@ public class TileManager : MonoBehaviour
         t.Value.SetColl();
         t.Value.cacheNeighbors();
         t.Value.SetLayer();
-        Debug.Log("Look Here Nerd: " + map.GetTile(t.Value.pos));
+        
         }
         return spots;
     }
@@ -90,11 +88,11 @@ public class TileManager : MonoBehaviour
         public static List<GameObject> FindPath(GameObject start, GameObject target){
         var toSearch = new List<GameObject>() {start};
         var processed = new List<GameObject>();
-        Debug.Log("look" + target.name);
+       
         var targetInfo = tileList[target.name];
         while(toSearch.Any()){
             var current = toSearch[0];
-            Debug.Log("Here" + current.name);
+         
             var currentInfo = tileList[current.name];
             foreach(var t in toSearch){
                  var info = tileList[t.name];
@@ -116,7 +114,7 @@ public class TileManager : MonoBehaviour
                         currentPath = currentPathInfo.Connection;
                         count--;
                         if(count < 0) {throw new Exception();}
-                        //Debug.Log("sdfsdf");
+                        
                     
                     }
                     //path.Reverse();

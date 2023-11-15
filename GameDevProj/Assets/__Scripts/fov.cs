@@ -20,7 +20,7 @@ public class fov : MonoBehaviour
        
 
         Vector3 OriginLocal = transform.InverseTransformPoint(Origin);
-        //Debug.Log("Origin !!!!!!!!!!! " + Origin);
+        
         int rayCount = 360;
         if(daddy.GetComponent<baseGaurd>().dir == direction.north){
            angle = 150f;
@@ -42,23 +42,22 @@ public class fov : MonoBehaviour
            
             RaycastHit2D hit = Physics2D.Raycast(Origin, GetVectorFromAngle(angle) ,viewDistance);
             if(hit.collider == null){
-                //Debug.Log("miss");
+             
                 vertex = OriginLocal +(GetVectorFromAngle(angle) * viewDistance);
             }
             else{
-                //Debug.Log("hit");
-                //Debug.Log(hit.collider);
+                
                 vertex = transform.InverseTransformPoint(hit.point);
                 
 
                 
                 //vertex = hit.barycentricCoordinate;
-               // Debug.Log(hit.point);
-                //Debug.Log(hit.transform.position);
+              
                 if(hit.collider.gameObject.tag == "Player"){
                     var b_gaurd = daddy.GetComponent<baseGaurd>();
-                    b_gaurd.path = TileManager.FindPath(b_gaurd.character.tile, hit.collider.gameObject.GetComponent<baseUnit>().tile);
-                    b_gaurd.move();
+                    b_gaurd.path = TileManager.FindPath(b_gaurd.tile, hit.collider.gameObject.GetComponent<baseUnit>().tile);
+                    Debug.Log(b_gaurd.path);
+                    //b_gaurd.move();
                 }
             }
             vertices[vertexIndex] = vertex;
@@ -80,7 +79,7 @@ public class fov : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
-        //Debug.Log("mesh placed");
+       
 
     }
 
