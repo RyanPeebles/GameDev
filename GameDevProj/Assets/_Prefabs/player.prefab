@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9207840673536584080}
   - component: {fileID: 1905370042603066086}
   m_Layer: 0
-  m_Name: Player
+  m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,10 +101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00882a2250ce694a840608d9806d3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tile: {fileID: 0}
   character: {fileID: 11400000, guid: 764da7f3850cc734e9cb9e65dc8e6405, type: 2}
   stealth: 0
   gm: {fileID: 0}
   tr: {fileID: 4633676854008158137}
+  p: {fileID: 6147038656828431697}
   Instance: {fileID: 0}
 --- !u!114 &4383468628111652688
 MonoBehaviour:
@@ -118,11 +120,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b926a5238ebbb4fb610ee3b46a9c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tile: {fileID: 0}
+  character: {fileID: 0}
+  stealth: 0
   goldValue: 0
   rigid: {fileID: 0}
   coll: {fileID: 0}
   item: {fileID: 0}
   text: {fileID: 0}
+  Instance: {fileID: 0}
 --- !u!61 &6128317707766162609
 BoxCollider2D:
   m_ObjectHideFlags: 0

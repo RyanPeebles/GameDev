@@ -9,24 +9,26 @@ using System.Linq;
 [CreateAssetMenu(fileName = "_Prefabs", menuName = "ScriptableObjects/tileInfo", order =1)]
 public class tileInfo : ScriptableObject{
 
-    public void Init(Vector3Int vc, String N, GameObject obg){
+    public void Init(Vector3Int vc, String N, GameObject obg,TileBase t){
         this.pos = vc;
         this.Name = N;
-        
+        this.tile = t;
         this.obj = obg;
+        this.tm = GameObject.Find("TileManager");
+        this.TileManager = tm.GetComponent<TileManager>();
     }
     public GameObject obj;
     public BoxCollider2D col;
     public String Name;
     public Vector3Int pos;
-  
+    public TileBase tile;
    public float G {get; private set;}
     public float H {get; private set;}
     public float F => G + H;
-    public TileBase Connection {get; private set;}
-    public List<TileBase> neighbors {get; protected set;}
+    public GameObject Connection {get; private set;}
+    public List<GameObject> neighbors {get; protected set;}
     public TileManager TileManager;
-
+    public GameObject tm;
     private static readonly List<Vector2> Dirs = new List<Vector2>() {
             new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, -1), new Vector2(1, 0),
             new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, -1), new Vector2(-1, 1)
@@ -43,7 +45,7 @@ public class tileInfo : ScriptableObject{
         obj.layer = 2;
     }
 
-    public void SetConnection(TileBase tile){
+    public void SetConnection(GameObject tile){
         Connection = tile;
     }
     public void SetH(float h){
@@ -54,15 +56,17 @@ public class tileInfo : ScriptableObject{
     }
 
     public void cacheNeighbors(){
-        neighbors = new List<TileBase>();
+        neighbors = new List<GameObject>();
+        Debug.Log(pos.x + "pos");
+        Debug.Log(pos.y + "pos");
         
-        
-        foreach (var tile in Dirs.Select(dir => TileManager.map.GetTile(new Vector3Int((int)(pos.x + dir.x),(int)(pos.y + dir.y),0))).Where(tile => tile != null)) {
-                neighbors.Add(tile);
-            }
+        foreach (var tile in Dirs.Select(dir => TileManager.tileList[$"{pos.x + dir.x},{pos.y + dir.y}"])){
+
+        }
+            
 
     }
-    public float GetDistance(TileBase tile){
+    public float GetDistance(GameObject tile){
         //var index = from t in TileManager.tileList where t.Item1;
         var info = TileManager.tileList[tile.name];
         var dist = new Vector2Int(Mathf.Abs((int)pos.x - (int)info.pos.x), Mathf.Abs((int)pos.y - (int)info.pos.y));
