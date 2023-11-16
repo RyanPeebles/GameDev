@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 
 public class fov : MonoBehaviour
 {
     [SerializeField]private Mesh mesh;
     [SerializeField]private GameObject daddy;
+    [SerializeField]private baseGaurd b_gaurd;
     public float angle;
+    //public int q = 1;
     private void Start(){
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         daddy = this.transform.parent.gameObject;
+        b_gaurd = daddy.GetComponent<baseGaurd>();
         
     }
     private void Update(){
@@ -54,9 +57,18 @@ public class fov : MonoBehaviour
                 //vertex = hit.barycentricCoordinate;
               
                 if(hit.collider.gameObject.tag == "Player"){
-                    var b_gaurd = daddy.GetComponent<baseGaurd>();
-                    b_gaurd.path = TileManager.FindPath(b_gaurd.tile, hit.collider.gameObject.GetComponent<baseUnit>().tile);
-                    Debug.Log(b_gaurd.path);
+                    
+
+                    if(this.b_gaurd.q == 1){
+                        this.b_gaurd.q =0;
+                        if(this.b_gaurd.path == null||!this.b_gaurd.path.Any()){
+                    this.b_gaurd.path = TileManager.FindPath(b_gaurd.tile, hit.collider.gameObject.GetComponent<baseUnit>().tile);
+                        }
+                    foreach(var t in this.b_gaurd.path){
+                    Debug.Log(t);}
+                    this.b_gaurd.move();
+                    }
+                    //continue;
                     //b_gaurd.move();
                 }
             }

@@ -8,57 +8,82 @@ public class baseGaurd : baseUnit
 {
     public ScriptableChar character;
     public bool moving = false;
-    public TileManager TM;
+    
     public List<GameObject> path;
     public GameObject target;
     public direction dir;
     public Transform tr;
+    //public Vector3 targetPos;
+    public int cnt;
+    public int q = 1;
 
     void Start()
     {
-        
+        this.foot = gameObject.transform.GetChild(1).gameObject;
     }
     void Update(){
-         if (Input.GetKey("right"))
-        {
-            tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
-        }
+       // Debug.Log(moving);
+        
         if(Input.GetKeyDown("up")){
             this.dir = direction.north;
         }
         else if(Input.GetKeyDown("left")){
             this.dir = direction.east;
         }
-        if(moving == true){
-           var t = TileManager.tileList[target.name];
-            Vector3 targetPos = new Vector3(t.pos.x,t.pos.y,-1);
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, .001f);
-            if(transform.position==targetPos){
-                 moving = false;
+        if(this.moving == true && this.path !=null){
             
+            //Debug.Log("target" +target.name);
+           var t = TileManager.tileList[target.name].obj;
+            Vector3 targetPos = new Vector3(t.transform.position.x,t.transform.position.y +1,-1);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, .005f);
+            //Debug.Log("this tile = " + this.tile.name);
+            //Debug.Log("this target = " + this.target.name);
+            if(this.tile == this.target){
+                 this.moving = false;
+                 Debug.Log("Done");
+                 //this.q = 1;
+                if(this.cnt <= 0){
+                    this.path = null;
+                    this.q =1;
+                    this.moving = false;
+                }
             }
 
     }
     }
     public void move(){
-         StartCoroutine(this.walkDaLine());
-    }
-    IEnumerator walkDaLine(){
-        Debug.Log(this.path);
+        this.cnt = this.path.Count;
         foreach(var tile in this.path){
+         StartCoroutine(this.walkDaLine(tile));
+        }
+         
+
+    }
+    
+    IEnumerator walkDaLine(GameObject t){
+        //Debug.Log(this.path.Count);
+        
+            //Debug.Log(tile.name);
+           
+            this.moving = true;
+            this.target = t;
             
-       this.moving = true;
-       this.target = tile;
-      yield return new WaitUntil(() => moving == false);
+            //Debug.Log(cnt);
+            this.cnt--;
+      yield return new WaitUntil(()=> (this.moving == false));
+      //this.q = 1;
+    
+    //this.path = null;
+    //this.q =1;
+    
     }
-    }
-    void OnTriggerEnter2D(Collider2D c){
-        Debug.Log("hellppp");
+    /*void OnTriggerEnter2D(Collider2D c){
+        //Debug.Log("hellppp");
         if(c.gameObject.tag == "Floor"){
-            Debug.Log("this is the one");
+            //Debug.Log("this is the one");
             var temp = TileManager.tileList[c.gameObject.name];
             this.tile = temp.obj;
         }
     }
-    
+    */
 }

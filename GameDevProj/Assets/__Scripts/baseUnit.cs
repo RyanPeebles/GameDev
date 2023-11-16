@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class baseUnit : MonoBehaviour
 {
     [SerializeField]public GameObject tile;
+    [SerializeField]public GameObject foot;
     
     //public ScriptableChar character;
     
