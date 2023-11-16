@@ -7,6 +7,7 @@ public class movement : basePlayer
     public int speed = 1;
 
     [SerializeField] public basePlayer Instance;
+    public playerControl pc;
 
 
     //public EventSystem es;
@@ -20,12 +21,14 @@ public class movement : basePlayer
         Instance.character.pos = tr.position;
         Instance.stealth = stealth.StandMode;
         Instance.character.skinsList = Resources.LoadAll<Sprite>("Skins").ToList();
+        pc = Instance.GetComponent<playerControl>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        Instance.tile = pc.tile;
         if (Input.GetKeyDown("c"))
         {
             if (Instance.stealth == stealth.StandMode)

@@ -52,6 +52,7 @@ public class playerControl : basePlayer
             item = coll.gameObject.GetComponent<BaseItem>();
             item2 = coll.gameObject;
         }
+        /*
         if(coll.gameObject.tag == "Floor"){
             
             var temp = TileManager.tileList[coll.gameObject.name];
@@ -60,6 +61,7 @@ public class playerControl : basePlayer
             Instance.tile = temp.obj;
           
         }
-
+*/
     }
+
 }

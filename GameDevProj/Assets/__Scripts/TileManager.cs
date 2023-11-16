@@ -25,6 +25,12 @@ public class TileManager : MonoBehaviour
         map = tmap.GetComponent<Tilemap>();
        // map = this.GetComponent<Tilemap>();
         tileList = Instance.getTiles();
+          foreach(KeyValuePair<String,tileInfo> t in tileList){
+        t.Value.SetColl();
+        t.Value.cacheNeighbors();
+        t.Value.SetLayer();
+        
+        }
     }
 
 
@@ -69,12 +75,7 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
-        foreach(KeyValuePair<String,tileInfo> t in spots){
-        t.Value.SetColl();
-        t.Value.cacheNeighbors();
-        t.Value.SetLayer();
-        
-        }
+      
         return spots;
     }
     // Update is called once per frame
@@ -86,47 +87,59 @@ public class TileManager : MonoBehaviour
 
 
         public static List<GameObject> FindPath(GameObject start, GameObject target){
+            Debug.Log("finding path");
+            Debug.Log("target "+ target);
         var toSearch = new List<GameObject>() {start};
         var processed = new List<GameObject>();
        
-        var targetInfo = tileList[target.name];
+        var targetInfo = TileManager.tileList[target.name];
         while(toSearch.Any()){
             var current = toSearch[0];
+            //Debug.Log(current.name);
+           // Debug.Log("l = " + toSearch.Count);
          
-            var currentInfo = tileList[current.name];
+            var currentInfo = TileManager.tileList[current.name];
+            //Debug.Log(currentInfo.Name);
             foreach(var t in toSearch){
-                 var info = tileList[t.name];
+                //Debug.Log("checking "+ t.name);
+                 var info = TileManager.tileList[t.name];
                 
-                if(info.F < currentInfo.F || info.F == currentInfo.F && info.H < currentInfo.H) {current = t;}
+                if(info.F < currentInfo.F || info.F == currentInfo.F && info.H < currentInfo.H) {current = t;
+                    currentInfo = TileManager.tileList[current.name];
+                Debug.Log("current = " + t.name);}
             }
 
                 processed.Add(current);
                 toSearch.Remove(current);
 
                 if( current == target){
+                    Debug.Log("target = current");
                     var currentPath = target;
                     var path = new List<GameObject>();
                     var count = 100;
                     while(currentPath != start){
                         path.Add(currentPath);
-                        var currentPathInfo = tileList[currentPath.name];
+                        var currentPathInfo = TileManager.tileList[currentPath.name];
                         //currentPath.inPath = true;
                         currentPath = currentPathInfo.Connection;
                         count--;
                         if(count < 0) {throw new Exception();}
-                        
+                        //Debug.Log(count);
                     
                     }
-                    //path.Reverse();
-        
+                    path.Reverse();
+                    Debug.Log("Path Found");
                     return path;
                     }
                     
-                
+               
                 foreach (var neighbor in currentInfo.neighbors.Where(t => !processed.Contains(t))) {
+                    //Debug.Log(neighbor.name + " is neighbor of " + currentInfo.obj.name);
                     var inSearch = toSearch.Contains(neighbor);
-                    var neighborInfo = tileList[neighbor.name];
+                    var neighborInfo = TileManager.tileList[neighbor.name];
                     var costToNeighbor = currentInfo.G + currentInfo.GetDistance(neighbor);
+                    //Debug.Log("Cost to neigh:" + costToNeighbor);
+                   // Debug.Log("G:" + neighborInfo.G);
 
                     if (!inSearch || costToNeighbor < neighborInfo.G) {
                         neighborInfo.SetG(costToNeighbor);
@@ -135,11 +148,13 @@ public class TileManager : MonoBehaviour
                         if (!inSearch) {
                             neighborInfo.SetH(neighborInfo.GetDistance(target));
                             toSearch.Add(neighbor);
+                            //Debug.Log("COntain neighbor");
                            
                         }
                     }
                     }
                 }
+                Debug.Log("fail");
                 return null;
             }
 

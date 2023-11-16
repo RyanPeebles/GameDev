@@ -16,12 +16,14 @@ public class tileInfo : ScriptableObject{
         this.obj = obg;
         this.tm = GameObject.Find("TileManager");
         this.TileManager = tm.GetComponent<TileManager>();
+        this.Instance = this;
     }
     public GameObject obj;
     public BoxCollider2D col;
     public String Name;
     public Vector3Int pos;
     public TileBase tile;
+    public tileInfo Instance;
    public float G {get; private set;}
     public float H {get; private set;}
     public float F => G + H;
@@ -42,28 +44,42 @@ public class tileInfo : ScriptableObject{
         //col.offset = new Vector2(.5f,.5f);
     }
     public void SetLayer(){
-        obj.layer = 2;
+        Instance.obj.layer = 2;
     }
 
     public void SetConnection(GameObject tile){
-        Connection = tile;
+        Instance.Connection = tile;
     }
     public void SetH(float h){
-        H = h;
+        Instance.H = h;
     }
     public void SetG(float g){
-        G=g;
+        Instance.G=g;
     }
 
     public void cacheNeighbors(){
         neighbors = new List<GameObject>();
         Debug.Log(pos.x + "pos");
         Debug.Log(pos.y + "pos");
+       
         
-        foreach (var tile in Dirs.Select(dir => TileManager.tileList[$"{pos.x + dir.x},{pos.y + dir.y}"])){
+        foreach (var tile in Dirs)
+          {
+               var tempx = pos.x + tile.x;
+               var tempy = pos.y + tile.y;
 
-        }
-            
+                var tn = $"{tempx},{tempy}";
+                //Debug.Log(tn);
+                //Debug.Log(TileManager.tileList);
+                if(TileManager.tileList.ContainsKey(tn)){
+                    var temp = TileManager.tileList[tn];
+                    this.neighbors.Add(temp.obj);
+          }
+                //Debug.Log("neighbor" + temp);
+               //this.neighbors.Add(TileManager.tileList[tn].obj);
+               
+            }
+           
 
     }
     public float GetDistance(GameObject tile){
