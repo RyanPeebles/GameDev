@@ -9,8 +9,10 @@ public class TileManager : MonoBehaviour
 {
     public TileBase tile;
     public static Tilemap map;
+    public static Tilemap Decormap;
     public GameObject tmap;
-
+    public GameObject tmap1;
+    public bool walk = true;
     [SerializeField]public static Dictionary<String,tileInfo> tileList;
     [SerializeField]public TileManager Instance;
     //public tileInfo ti;
@@ -23,6 +25,7 @@ public class TileManager : MonoBehaviour
     {
         Instance = this;
         map = tmap.GetComponent<Tilemap>();
+        Decormap = tmap1.GetComponent<Tilemap>();
        // map = this.GetComponent<Tilemap>();
         tileList = Instance.getTiles();
           foreach(KeyValuePair<String,tileInfo> t in tileList){
@@ -48,6 +51,7 @@ public class TileManager : MonoBehaviour
                 
                 if (map.HasTile(localPlace))
                 {
+                    
                     String name = $"{n},{p}";
 
                     TileBase t = TileManager.map.GetTile(localPlace);
@@ -60,8 +64,14 @@ public class TileManager : MonoBehaviour
                     tileInfo ti = tileInfo.CreateInstance<tileInfo>();
                     //t.name = name;
                     go.name = name;
+                    if(Decormap.HasTile(localPlace)){
+                        walk = false;
+                        Debug.Log(walk + " tile: " + go.name);
+                    }else if(!Decormap.HasTile(localPlace)){
+                        walk = true;
+                    }
                    
-                    ti.Init(localPlace,t.name,go,t);
+                    ti.Init(localPlace,t.name,go,t,walk);
                     
                    
                     
@@ -88,7 +98,7 @@ public class TileManager : MonoBehaviour
 
         public static List<GameObject> FindPath(GameObject start, GameObject target){
             Debug.Log("finding path");
-            Debug.Log("target "+ target);
+           // Debug.Log("target "+ target);
         var toSearch = new List<GameObject>() {start};
         var processed = new List<GameObject>();
        
@@ -106,14 +116,15 @@ public class TileManager : MonoBehaviour
                 
                 if(info.F < currentInfo.F || info.F == currentInfo.F && info.H < currentInfo.H) {current = t;
                     currentInfo = TileManager.tileList[current.name];
-                Debug.Log("current = " + t.name);}
+                //Debug.Log("current = " + t.name);
+                }
             }
 
                 processed.Add(current);
                 toSearch.Remove(current);
 
                 if( current == target){
-                    Debug.Log("target = current");
+                    //Debug.Log("target = current");
                     var currentPath = target;
                     var path = new List<GameObject>();
                     var count = 100;
@@ -133,7 +144,7 @@ public class TileManager : MonoBehaviour
                     }
                     
                
-                foreach (var neighbor in currentInfo.neighbors.Where(t => !processed.Contains(t))) {
+                foreach (var neighbor in currentInfo.neighbors.Where(t => !processed.Contains(t) && TileManager.tileList[t.name].walkable)) {
                     //Debug.Log(neighbor.name + " is neighbor of " + currentInfo.obj.name);
                     var inSearch = toSearch.Contains(neighbor);
                     var neighborInfo = TileManager.tileList[neighbor.name];
@@ -158,7 +169,8 @@ public class TileManager : MonoBehaviour
                 return null;
             }
 
-
+    
+    
 
 
 

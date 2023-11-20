@@ -12,7 +12,7 @@ public class baseGaurd : baseUnit
     public List<GameObject> path;
     public GameObject target;
     public direction dir;
-    public Transform tr;
+    
     //public Vector3 targetPos;
     public int cnt;
     public int q = 1;
@@ -24,53 +24,50 @@ public class baseGaurd : baseUnit
     void Update(){
        // Debug.Log(moving);
         
-        if(Input.GetKeyDown("up")){
-            this.dir = direction.north;
-        }
-        else if(Input.GetKeyDown("left")){
-            this.dir = direction.east;
-        }
+        
         if(this.moving == true && this.path !=null){
             
             //Debug.Log("target" +target.name);
-           var t = TileManager.tileList[target.name].obj;
-            Vector3 targetPos = new Vector3(t.transform.position.x,t.transform.position.y +1,-1);
+           var t = TileManager.tileList[this.target.name];
+            Vector3 targetPos = TileManager.map.GetCellCenterWorld(t.pos);
+            targetPos += new Vector3(0,.5f,-1);
+            //Debug.Log(targetPos);
             transform.position = Vector3.MoveTowards(transform.position, targetPos, .005f);
             //Debug.Log("this tile = " + this.tile.name);
             //Debug.Log("this target = " + this.target.name);
             if(this.tile == this.target){
+              
                  this.moving = false;
-                 Debug.Log("Done");
+                 
                  //this.q = 1;
-                if(this.cnt <= 0){
-                    this.path = null;
-                    this.q =1;
-                    this.moving = false;
-                }
+                
             }
 
     }
     }
     public void move(){
         this.cnt = this.path.Count;
-        foreach(var tile in this.path){
-         StartCoroutine(this.walkDaLine(tile));
+        if(!this.moving){
+            StartCoroutine(this.walkDaLine(this.path));
         }
-         
-
+       
     }
     
-    IEnumerator walkDaLine(GameObject t){
+    IEnumerator walkDaLine(List<GameObject> t){
         //Debug.Log(this.path.Count);
         
             //Debug.Log(tile.name);
-           
+           foreach(var tile in t){
             this.moving = true;
-            this.target = t;
-            
+            this.target = tile;
+           
             //Debug.Log(cnt);
             this.cnt--;
-      yield return new WaitUntil(()=> (this.moving == false));
+      yield return new WaitUntil(()=> (this.moving == false || this.path == null));
+      this.tile = this.target;
+      this.moving = false;
+      
+           }
       //this.q = 1;
     
     //this.path = null;

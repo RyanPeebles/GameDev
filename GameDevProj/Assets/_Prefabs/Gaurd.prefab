@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mesh: {fileID: 0}
   daddy: {fileID: 3339252097476739999}
+  b_gaurd: {fileID: 0}
   angle: 0
 --- !u!23 &412840650763367675
 MeshRenderer:
@@ -224,7 +225,6 @@ MonoBehaviour:
   path: []
   target: {fileID: 0}
   dir: 0
-  tr: {fileID: 7776081473242406718}
   cnt: 0
   q: 1
 --- !u!50 &2770915929871516265
@@ -327,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 5721844157259093832}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0.007, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -392,7 +392,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.004173279, y: -0.6836332}
+  m_Offset: {x: -0.008899212, y: -0.6836332}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -403,7 +403,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.32389545, y: 0.13273352}
+  m_Size: {x: 0.011963844, y: 0.13273358}
   m_EdgeRadius: 0
 --- !u!114 &8634302764991901994
 MonoBehaviour:

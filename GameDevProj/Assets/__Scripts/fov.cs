@@ -18,6 +18,7 @@ public class fov : MonoBehaviour
         
     }
     private void Update(){
+         angle = 90;
         float Fov = 120f;
         Vector3 Origin = daddy.transform.position;
        
@@ -25,10 +26,7 @@ public class fov : MonoBehaviour
         Vector3 OriginLocal = transform.InverseTransformPoint(Origin);
         
         int rayCount = 360;
-        if(daddy.GetComponent<baseGaurd>().dir == direction.north){
-           angle = 150f;
-        }
-        else if(daddy.GetComponent<baseGaurd>().dir == direction.east){ angle = -120f;}
+      
         float angleIncrease = Fov/rayCount;
         float viewDistance = 10f;
 
@@ -45,7 +43,7 @@ public class fov : MonoBehaviour
            
             RaycastHit2D hit = Physics2D.Raycast(Origin, GetVectorFromAngle(angle) ,viewDistance);
             if(hit.collider == null){
-             
+               // angle = 150;
                 vertex = OriginLocal +(GetVectorFromAngle(angle) * viewDistance);
             }
             else{
@@ -57,20 +55,19 @@ public class fov : MonoBehaviour
                 //vertex = hit.barycentricCoordinate;
               
                 if(hit.collider.gameObject.tag == "Player"){
-                    
-
-                    if(this.b_gaurd.q == 1){
-                        this.b_gaurd.q =0;
+                   
+                   
                         if(this.b_gaurd.path == null||!this.b_gaurd.path.Any()){
                     this.b_gaurd.path = TileManager.FindPath(b_gaurd.tile, hit.collider.gameObject.GetComponent<baseUnit>().tile);
-                        }
-                    foreach(var t in this.b_gaurd.path){
-                    Debug.Log(t);}
+                        
+                    
                     this.b_gaurd.move();
+                        }
                     }
                     //continue;
                     //b_gaurd.move();
-                }
+                
+              
             }
             vertices[vertexIndex] = vertex;
 

@@ -27,17 +27,24 @@ public class footColScript : MonoBehaviour
         
     }
 
+
     void OnTriggerEnter2D(Collider2D c){
         //Debug.Log(c.gameObject.name);
-        if(c.gameObject.tag == "Floor"){
+        if(c.gameObject.tag == "Floor" ){
             var temp = TileManager.tileList[c.gameObject.name];
+            
             if(Instance.bgaurd != null){
                 
-                Instance.bgaurd.tile = temp.obj;
-                
+                if(Instance.bgaurd.tile!=temp.obj){
+                    Debug.Log("tielhit : " + temp.obj);
+                    Instance.bgaurd.tile = temp.obj;
+                }
             }
             if(Instance.bPlayer != null){
-                Instance.bPlayer.tile = temp.obj;
+                if(Instance.bPlayer.tile!=temp.obj){
+                    Instance.bPlayer.tile = temp.obj;
+                }
+            
             }
         }
     }

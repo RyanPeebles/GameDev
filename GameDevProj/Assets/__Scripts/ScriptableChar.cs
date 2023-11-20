@@ -17,6 +17,7 @@ public class ScriptableChar : ScriptableObject
    public List<Sprite> skinsList;
    public SpriteRenderer spr;
    public GameObject tile;
+   public floor Floor;
    //public direction dir;
 
 }
@@ -37,4 +38,9 @@ public enum direction{
     south,
     east,
     west
+}
+public enum floor{
+    basement,
+    main,
+    lower
 }

@@ -9,7 +9,7 @@ using System.Linq;
 [CreateAssetMenu(fileName = "_Prefabs", menuName = "ScriptableObjects/tileInfo", order =1)]
 public class tileInfo : ScriptableObject{
 
-    public void Init(Vector3Int vc, String N, GameObject obg,TileBase t){
+    public void Init(Vector3Int vc, String N, GameObject obg,TileBase t,bool walk){
         this.pos = vc;
         this.Name = N;
         this.tile = t;
@@ -17,13 +17,16 @@ public class tileInfo : ScriptableObject{
         this.tm = GameObject.Find("TileManager");
         this.TileManager = tm.GetComponent<TileManager>();
         this.Instance = this;
+        this.walkable = walk;
     }
     public GameObject obj;
     public BoxCollider2D col;
+    public Rigidbody2D rb;
     public String Name;
     public Vector3Int pos;
     public TileBase tile;
     public tileInfo Instance;
+    public bool walkable = true;
    public float G {get; private set;}
     public float H {get; private set;}
     public float F => G + H;
@@ -31,18 +34,23 @@ public class tileInfo : ScriptableObject{
     public List<GameObject> neighbors {get; protected set;}
     public TileManager TileManager;
     public GameObject tm;
+    public Collider2D[] cols = new Collider2D[100];
     private static readonly List<Vector2> Dirs = new List<Vector2>() {
             new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, -1), new Vector2(1, 0),
             new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, -1), new Vector2(-1, 1)
         };
     public void SetColl(){
-        col= obj.GetComponent<BoxCollider2D>();
+        Instance.col= Instance.obj.GetComponent<BoxCollider2D>();
         String s = "Floor";
-        col.tag = s;
-        col.isTrigger=(true);
-        col.includeLayers = 4;
+        Instance.col.tag = s;
+        Instance.col.isTrigger=(true);
+        Instance.col.includeLayers = 4;
+   
+
+      
         //col.offset = new Vector2(.5f,.5f);
     }
+   
     public void SetLayer(){
         Instance.obj.layer = 2;
     }
@@ -59,8 +67,8 @@ public class tileInfo : ScriptableObject{
 
     public void cacheNeighbors(){
         neighbors = new List<GameObject>();
-        Debug.Log(pos.x + "pos");
-        Debug.Log(pos.y + "pos");
+        //Debug.Log(pos.x + "pos");
+        //Debug.Log(pos.y + "pos");
        
         
         foreach (var tile in Dirs)
