@@ -5,7 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class baseUnit : MonoBehaviour
 {
-    [SerializeField]public TileBase tile;
+    [SerializeField]public GameObject tile;
+    [SerializeField]public GameObject foot;
+    
+    //public ScriptableChar character;
+    
     void Start()
     {
         
