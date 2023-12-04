@@ -1,28 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 
 public class fov : MonoBehaviour
 {
     [SerializeField]private Mesh mesh;
     [SerializeField]private GameObject daddy;
+    [SerializeField]private baseGaurd b_gaurd;
+    public float angle;
+    public bool playerSpotted = false;
+    //public int q = 1;
     private void Start(){
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         daddy = this.transform.parent.gameObject;
+        b_gaurd = daddy.GetComponent<baseGaurd>();
         
     }
-    private void Update(){
-        float Fov = 90f;
+    private void FixedUpdate(){
+         angle = 90;
+        float Fov = 120f;
         Vector3 Origin = daddy.transform.position;
        
 
         Vector3 OriginLocal = transform.InverseTransformPoint(Origin);
-        //Debug.Log("Origin !!!!!!!!!!! " + Origin);
-        int rayCount = 50;
-        float angle = 30f;
-        float angleIncrease = Fov / rayCount;
+        
+        int rayCount = 360;
+      
+        float angleIncrease = Fov/rayCount;
         float viewDistance = 10f;
 
 
@@ -38,20 +44,35 @@ public class fov : MonoBehaviour
            
             RaycastHit2D hit = Physics2D.Raycast(Origin, GetVectorFromAngle(angle) ,viewDistance);
             if(hit.collider == null){
-                //Debug.Log("miss");
+               // angle = 150;
                 vertex = OriginLocal +(GetVectorFromAngle(angle) * viewDistance);
             }
             else{
-                //Debug.Log("hit");
-                //Debug.Log(hit.collider);
+                
                 vertex = transform.InverseTransformPoint(hit.point);
-               // Debug.Log(hit.point);
-                //Debug.Log(hit.transform.position);
+                
+
+                
+                //vertex = hit.barycentricCoordinate;
+              
                 if(hit.collider.gameObject.tag == "Player"){
-                    var b_gaurd = daddy.GetComponent<baseGaurd>();
-                    //b_gaurd.path = TileManager.FindPath(b_gaurd.character.tile, hit.collider.gameObject.GetComponent<baseUnit>().tile);
-                   // b_gaurd.move();
-                }
+                    playerSpotted = true;
+                    this.b_gaurd.FinalTarget = hit.collider.gameObject.GetComponent<baseUnit>().tile;
+                   
+                        if(this.b_gaurd.path == null||!this.b_gaurd.path.Any()){
+                    this.b_gaurd.path = TileManager.FindPath(this.b_gaurd.tile, this.b_gaurd.FinalTarget);
+                        
+                    
+                    this.b_gaurd.move();
+                        }
+                    }
+                    else{
+                        playerSpotted = false;
+                    }
+                    //continue;
+                    //b_gaurd.move();
+                
+              
             }
             vertices[vertexIndex] = vertex;
 
@@ -72,7 +93,7 @@ public class fov : MonoBehaviour
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
-        //Debug.Log("mesh placed");
+       
 
     }
 
