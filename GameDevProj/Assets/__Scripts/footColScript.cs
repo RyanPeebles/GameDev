@@ -102,7 +102,7 @@ public class footColScript : MonoBehaviour
         //Debug.Log(c.gameObject.name);
         if(c.gameObject.tag == "Floor" ){
             var temp = TileManager.tileList[c.gameObject.name];
-            if(temp.walkable == true){
+            
             if(Instance.bgaurd != null){
                 
                 if(Instance.bgaurd.tile!=temp.obj){
@@ -116,7 +116,7 @@ public class footColScript : MonoBehaviour
                 }
             
             }
-            }
+            
         }
     }
 }
