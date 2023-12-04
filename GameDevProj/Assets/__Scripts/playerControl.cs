@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class playerControl : basePlayer
 {
@@ -11,7 +10,7 @@ public class playerControl : basePlayer
     public TMP_Text text;
     private bool pickupable = false;
     private GameObject item2;
-    [SerializeField]public basePlayer Instance;
+    [SerializeField] public basePlayer Instance;
 
     // Start is called before the first frame update
     void Start()
