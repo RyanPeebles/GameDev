@@ -16,7 +16,9 @@ public class ScriptableChar : ScriptableObject
    public Vector3 pos;
    public List<Sprite> skinsList;
    public SpriteRenderer spr;
-   public TileBase tile;
+   public GameObject tile;
+   public floor Floor;
+   //public direction dir;
 
 }
 public enum type{
@@ -30,4 +32,15 @@ public enum skins{
     King,
     Naked
 
+}
+public enum direction{
+    north,
+    south,
+    east,
+    west
+}
+public enum floor{
+    basement,
+    main,
+    lower
 }
