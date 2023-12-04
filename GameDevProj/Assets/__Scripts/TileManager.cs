@@ -9,10 +9,8 @@ public class TileManager : MonoBehaviour
 {
     public TileBase tile;
     public static Tilemap map;
-    public static Tilemap Decormap;
     public GameObject tmap;
-    public GameObject tmap1;
-    public bool walk = true;
+
     [SerializeField]public static Dictionary<String,tileInfo> tileList;
     [SerializeField]public TileManager Instance;
     //public tileInfo ti;
@@ -25,58 +23,44 @@ public class TileManager : MonoBehaviour
     {
         Instance = this;
         map = tmap.GetComponent<Tilemap>();
-        Decormap = tmap1.GetComponent<Tilemap>();
        // map = this.GetComponent<Tilemap>();
         tileList = Instance.getTiles();
-          foreach(KeyValuePair<String,tileInfo> t in tileList){
-        t.Value.SetColl();
-        t.Value.cacheNeighbors();
-        t.Value.SetLayer();
-        
-        }
     }
 
 
     public Dictionary<String,tileInfo> getTiles(){
 
         Dictionary<String,tileInfo> spots = new Dictionary<String,tileInfo>();
-       
+        Debug.Log(map.cellBounds.xMin);
+        Debug.Log(map.cellBounds.yMin);
  
-        for (int n = map.cellBounds.xMin; n <= map.cellBounds.xMax; n++)
+        for (int n = map.cellBounds.xMin; n < map.cellBounds.xMax; n++)
         {
-            for (int p = map.cellBounds.yMin; p <= map.cellBounds.yMax; p++)
+            for (int p = map.cellBounds.yMin; p < map.cellBounds.yMax; p++)
             {
                 Vector3Int localPlace = (new Vector3Int(n, p, (int)map.transform.position.z));
                 Vector3 place = TileManager.map.GetCellCenterWorld(localPlace);
-                
+                Debug.Log("LP: "+ localPlace);
                 if (map.HasTile(localPlace))
                 {
-                    
                     String name = $"{n},{p}";
 
+                    //Debug.Log(name);
                     TileBase t = TileManager.map.GetTile(localPlace);
-                    
                     //tileInfo ti = new tileInfo();
                     GameObject go = new GameObject();
                     go.AddComponent<BoxCollider2D>();
                     go.transform.position = place;
-                    
-                    tileInfo ti = tileInfo.CreateInstance<tileInfo>();
-                    //t.name = name;
+                    Debug.Log(t);
+                    var ti = tileInfo.CreateInstance<tileInfo>();
+                    t.name = name;
                     go.name = name;
-                    if(Decormap.HasTile(localPlace)){
-                        walk = false;
-                        Debug.Log(walk + " tile: " + go.name);
-                    }else if(!Decormap.HasTile(localPlace)){
-                        walk = true;
-                    }
-                   
-                    ti.Init(localPlace,t.name,go,t,walk);
+                    ti.Init(localPlace,t.name,go);
                     
                    
                     
                     //Tile at "place"
-                    spots.Add(name,ti);
+                    spots.Add(t.name,ti);
                 
                 }
                 else
@@ -85,7 +69,12 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
-      
+        foreach(KeyValuePair<String,tileInfo> t in spots){
+        t.Value.SetColl();
+        t.Value.cacheNeighbors();
+        t.Value.SetLayer();
+        Debug.Log("Look Here Nerd: " + map.GetTile(t.Value.pos));
+        }
         return spots;
     }
     // Update is called once per frame
@@ -96,61 +85,48 @@ public class TileManager : MonoBehaviour
 
 
 
-        public static List<GameObject> FindPath(GameObject start, GameObject target){
-            Debug.Log("finding path");
-           // Debug.Log("target "+ target);
-        var toSearch = new List<GameObject>() {start};
-        var processed = new List<GameObject>();
-       
-        var targetInfo = TileManager.tileList[target.name];
+        public static List<TileBase> FindPath(TileBase start, TileBase target){
+        var toSearch = new List<TileBase>() {start};
+        var processed = new List<TileBase>();
+        Debug.Log("look" + target.name);
+        var targetInfo = tileList[target.name];
         while(toSearch.Any()){
             var current = toSearch[0];
-            //Debug.Log(current.name);
-           // Debug.Log("l = " + toSearch.Count);
-         
-            var currentInfo = TileManager.tileList[current.name];
-            //Debug.Log(currentInfo.Name);
+            Debug.Log("Here" + current.name);
+            var currentInfo = tileList[current.name];
             foreach(var t in toSearch){
-                //Debug.Log("checking "+ t.name);
-                 var info = TileManager.tileList[t.name];
+                 var info = tileList[t.name];
                 
-                if(info.F < currentInfo.F || info.F == currentInfo.F && info.H < currentInfo.H) {current = t;
-                    currentInfo = TileManager.tileList[current.name];
-                //Debug.Log("current = " + t.name);
-                }
+                if(info.F < currentInfo.F || info.F == currentInfo.F && info.H < currentInfo.H) {current = t;}
             }
 
                 processed.Add(current);
                 toSearch.Remove(current);
 
                 if( current == target){
-                    //Debug.Log("target = current");
                     var currentPath = target;
-                    var path = new List<GameObject>();
+                    var path = new List<TileBase>();
                     var count = 100;
                     while(currentPath != start){
                         path.Add(currentPath);
-                        var currentPathInfo = TileManager.tileList[currentPath.name];
+                        var currentPathInfo = tileList[currentPath.name];
                         //currentPath.inPath = true;
                         currentPath = currentPathInfo.Connection;
                         count--;
                         if(count < 0) {throw new Exception();}
-                        //Debug.Log(count);
+                        //Debug.Log("sdfsdf");
                     
                     }
-                    path.Reverse();
-                    Debug.Log("Path Found");
+                    //path.Reverse();
+        
                     return path;
                     }
                     
-               
-                foreach (var neighbor in currentInfo.neighbors.Where(t => !processed.Contains(t) && TileManager.tileList[t.name].walkable)) {
-                    //Debug.Log(neighbor.name + " is neighbor of " + currentInfo.obj.name);
+                
+                foreach (var neighbor in currentInfo.neighbors.Where(t => !processed.Contains(t))) {
                     var inSearch = toSearch.Contains(neighbor);
-                    var neighborInfo = TileManager.tileList[neighbor.name];
+                    var neighborInfo = tileList[neighbor.name];
                     var costToNeighbor = currentInfo.G + currentInfo.GetDistance(neighbor);
-                    //Debug.Log("Cost to neigh:" + costToNeighbor);
-                   // Debug.Log("G:" + neighborInfo.G);
 
                     if (!inSearch || costToNeighbor < neighborInfo.G) {
                         neighborInfo.SetG(costToNeighbor);
@@ -159,18 +135,15 @@ public class TileManager : MonoBehaviour
                         if (!inSearch) {
                             neighborInfo.SetH(neighborInfo.GetDistance(target));
                             toSearch.Add(neighbor);
-                            //Debug.Log("COntain neighbor");
                            
                         }
                     }
                     }
                 }
-                Debug.Log("fail");
                 return null;
             }
 
-    
-    
+
 
 
 
