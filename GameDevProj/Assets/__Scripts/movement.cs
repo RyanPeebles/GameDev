@@ -4,11 +4,8 @@ public class movement : basePlayer
 {
     public GameManager gm;
     public Transform tr;
-    public int speed = 1;
-    
 
     [SerializeField] public basePlayer Instance;
-    public playerControl pc;
 
 
     //public EventSystem es;
@@ -22,17 +19,12 @@ public class movement : basePlayer
         Instance.character.pos = tr.position;
         Instance.stealth = stealth.StandMode;
         Instance.character.skinsList = Resources.LoadAll<Sprite>("Skins").ToList();
-        pc = Instance.GetComponent<playerControl>();
-        Instance.tile = pc.tile;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Instance.tile = pc.tile;
-     
-       
         if (Input.GetKeyDown("c"))
         {
             if (Instance.stealth == stealth.StandMode)
@@ -48,33 +40,31 @@ public class movement : basePlayer
             }
 
         }
-        
 
         if (Input.GetKey("right"))
         {
             this.changeSkin("right");
-            
+            tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime);
         }
         if (Input.GetKey("up"))
         {
             this.changeSkin("up");
-          
+            tr.Translate(new Vector3(0f, 1f, 0) * Time.deltaTime);
         }
         if (Input.GetKey("down"))
         {
             this.changeSkin("down");
 
-            
+            tr.Translate(new Vector3(0f, -1f, 0) * Time.deltaTime);
         }
         if (Input.GetKey("left"))
         {
            
             this.changeSkin("left");
-           
-         
+            tr.Translate(new Vector3(-1f, 0, 0) * Time.deltaTime);
+        }
+
     }
-    }
-   
     public void changeSkin(string dir)
     {
         if (Instance.stealth == stealth.stealthMode)

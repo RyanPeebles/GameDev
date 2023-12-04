@@ -6,8 +6,6 @@ TagManager:
   tags:
   - Item
   - Floor
-  - gaurd
-  - decor
   layers:
   - Default
   - TransparentFX
