@@ -66,9 +66,11 @@ public class TileManager : MonoBehaviour
                     go.name = name;
                     if(Decormap.HasTile(localPlace)){
                         walk = false;
-                        Debug.Log(walk + " tile: " + go.name);
+                        //go.AddComponent<Rigidbody2D>();
+                        //Debug.Log(walk + " tile: " + go.name);
                     }else if(!Decormap.HasTile(localPlace)){
                         walk = true;
+                        
                     }
                    
                     ti.Init(localPlace,t.name,go,t,walk);
