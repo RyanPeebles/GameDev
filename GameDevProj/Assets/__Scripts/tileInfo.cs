@@ -46,9 +46,14 @@ public class tileInfo : ScriptableObject{
         Instance.col.isTrigger=(true);
         Instance.col.includeLayers = 4;
         if(Instance.walkable == false){
-            //Instance.rb = Instance.obj.GetComponent<Rigidbody2D>();
-            //Instance.rb.gravityScale = 0;
-           // Instance.col.isTrigger = false;
+            try{
+            Instance.rb = Instance.obj.GetComponent<Rigidbody2D>();
+            Instance.rb.gravityScale = 0;
+            Instance.col.isTrigger = false;
+            }
+            catch(Exception e){
+                return;
+            }
         }
    
 

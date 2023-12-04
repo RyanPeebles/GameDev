@@ -9,9 +9,19 @@ public class TileManager : MonoBehaviour
 {
     public TileBase tile;
     public static Tilemap map;
+    public static Tilemap map1;
+    public static Tilemap map2;
+    public static Tilemap mapWalls;
     public static Tilemap Decormap;
+    public static Tilemap Decormap1;
+    public static Tilemap Decormap2;
     public GameObject tmap;
     public GameObject tmap1;
+    public GameObject tmap2;
+    public GameObject tmap3;
+    public GameObject tmap4;
+    public GameObject tmap5;
+    public GameObject tmapWalls;
     public bool walk = true;
     [SerializeField]public static Dictionary<String,tileInfo> tileList;
     [SerializeField]public TileManager Instance;
@@ -26,6 +36,11 @@ public class TileManager : MonoBehaviour
         Instance = this;
         map = tmap.GetComponent<Tilemap>();
         Decormap = tmap1.GetComponent<Tilemap>();
+        map1 = tmap2.GetComponent<Tilemap>();
+        Decormap1 = tmap3.GetComponent<Tilemap>();
+        map2 = tmap4.GetComponent<Tilemap>();
+        Decormap2 = tmap5.GetComponent<Tilemap>();
+        mapWalls = tmapWalls.GetComponent<Tilemap>();
        // map = this.GetComponent<Tilemap>();
         tileList = Instance.getTiles();
           foreach(KeyValuePair<String,tileInfo> t in tileList){
@@ -64,11 +79,13 @@ public class TileManager : MonoBehaviour
                     tileInfo ti = tileInfo.CreateInstance<tileInfo>();
                     //t.name = name;
                     go.name = name;
-                    if(Decormap.HasTile(localPlace)){
+                    if(Decormap.HasTile(localPlace) || mapWalls.HasTile(localPlace)){
                         walk = false;
-                        //go.AddComponent<Rigidbody2D>();
+                        if(mapWalls.HasTile(localPlace)){
+                            go.AddComponent<Rigidbody2D>();
+                        }
                         //Debug.Log(walk + " tile: " + go.name);
-                    }else if(!Decormap.HasTile(localPlace)){
+                    }else if(!Decormap.HasTile(localPlace) && !mapWalls.HasTile(localPlace)){
                         walk = true;
                         
                     }
@@ -87,6 +104,97 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+         for (int n = map1.cellBounds.xMin; n <= map1.cellBounds.xMax; n++)
+        {
+            for (int p = map1.cellBounds.yMin; p <= map1.cellBounds.yMax; p++)
+            {
+                Vector3Int localPlace = (new Vector3Int(n, p, (int)map1.transform.position.z));
+                Vector3 place = TileManager.map1.GetCellCenterWorld(localPlace);
+                
+                if (map1.HasTile(localPlace))
+                {
+                    
+                    String name = $"{n},{p}";
+
+                    TileBase t = TileManager.map1.GetTile(localPlace);
+                    
+                    //tileInfo ti = new tileInfo();
+                    GameObject go = new GameObject();
+                    go.AddComponent<BoxCollider2D>();
+                    go.transform.position = place;
+                    
+                    tileInfo ti = tileInfo.CreateInstance<tileInfo>();
+                    //t.name = name;
+                    go.name = name;
+                    if(Decormap1.HasTile(localPlace)){
+                        walk = false;
+                        //go.AddComponent<Rigidbody2D>();
+                        //Debug.Log(walk + " tile: " + go.name);
+                    }else if(!Decormap1.HasTile(localPlace)){
+                        walk = true;
+                        
+                    }
+                   
+                    ti.Init(localPlace,t.name,go,t,walk);
+                    
+                   
+                    
+                    //Tile at "place"
+                    spots.Add(name,ti);
+                
+                }
+                else
+                {
+                    //No tile at "place"
+                }
+            }
+        }
+         for (int n = map2.cellBounds.xMin; n <= map2.cellBounds.xMax; n++)
+        {
+            for (int p = map2.cellBounds.yMin; p <= map2.cellBounds.yMax; p++)
+            {
+                Vector3Int localPlace = (new Vector3Int(n, p, (int)map2.transform.position.z));
+                Vector3 place = TileManager.map2.GetCellCenterWorld(localPlace);
+                
+                if (map2.HasTile(localPlace))
+                {
+                    
+                    String name = $"{n},{p}";
+
+                    TileBase t = TileManager.map2.GetTile(localPlace);
+                    
+                    //tileInfo ti = new tileInfo();
+                    GameObject go = new GameObject();
+                    go.AddComponent<BoxCollider2D>();
+                    go.transform.position = place;
+                    
+                    tileInfo ti = tileInfo.CreateInstance<tileInfo>();
+                    //t.name = name;
+                    go.name = name;
+                    if(Decormap2.HasTile(localPlace)){
+                        walk = false;
+                        //go.AddComponent<Rigidbody2D>();
+                        //Debug.Log(walk + " tile: " + go.name);
+                    }else if(!Decormap2.HasTile(localPlace)){
+                        walk = true;
+                        
+                    }
+                   
+                    ti.Init(localPlace,t.name,go,t,walk);
+                    
+                   
+                    
+                    //Tile at "place"
+                    spots.Add(name,ti);
+                
+                }
+                else
+                {
+                    //No tile at "place"
+                }
+            }
+        }
+         
       
         return spots;
     }

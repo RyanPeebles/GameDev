@@ -9,6 +9,7 @@ public class footColScript : MonoBehaviour
     public basePlayer bPlayer;
     public Transform tr;
     public Transform tr2;
+    public bool colliding = false;
     public float speed = 1f;
     [SerializeField]public footColScript Instance;
     // Start is called before the first frame update
@@ -28,12 +29,16 @@ public class footColScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
-        if(Instance.bPlayer != null){
-           
-         if (Input.GetKey("right"))
+        if(Instance.bPlayer != null && this.colliding == false){
+             if(Instance.tr2.localPosition != Vector3.zero){
+            Instance.tr.position = Instance.tr2.TransformPoint(Instance.tr2.localPosition);
+             }
+             Instance.tr2.localPosition = Vector3.zero;
+        
+         if (Input.GetKey("right") && !Input.GetKey("left"))
         {
             
             Instance.tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime * speed);
@@ -49,7 +54,7 @@ public class footColScript : MonoBehaviour
 
             Instance.tr.Translate(new Vector3(0f, -1f, 0) * Time.deltaTime * speed);
         }
-        if (Input.GetKey("left"))
+        if (Input.GetKey("left") && !Input.GetKey("right"))
         {
            
             
@@ -60,20 +65,36 @@ public class footColScript : MonoBehaviour
     }
         
     
-    void OnCollisionEnter2D(Collision2D c){
-        if(c.gameObject.tag == "decor"){
+      void OnCollisionEnter2D(Collision2D c){
+        if(c.gameObject.tag == "decor" || c.gameObject.tag == "walls"){
+            if(!this.colliding){
+                this.colliding = true;
+                speed = 0;
+            }
             
-            speed = -1;
+            
         }
     }
     void OnCollisionStay2D(Collision2D c){
-        if(c.gameObject.tag == "decor"){
-            speed = .25f;
+        if(c.gameObject.tag == "decor" || c.gameObject.tag == "walls"){
+            if(this.colliding){
+                
+                speed = -1;
+                this.colliding = false;
+            }
+            
+            else{
+                speed = 1f;
+            }
         }
     }
+    
     void OnCollisionExit2D(Collision2D c){
-        if(c.gameObject.tag =="decor"){
+        if(c.gameObject.tag =="decor" || c.gameObject.tag == "walls"){
+            if(!this.colliding){
+                
             speed = 1f;
+            }
         }
     }
  
