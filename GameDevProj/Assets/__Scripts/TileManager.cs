@@ -126,11 +126,13 @@ public class TileManager : MonoBehaviour
                     tileInfo ti = tileInfo.CreateInstance<tileInfo>();
                     //t.name = name;
                     go.name = name;
-                    if(Decormap1.HasTile(localPlace)){
+                      if(Decormap.HasTile(localPlace) || mapWalls.HasTile(localPlace)){
                         walk = false;
-                        //go.AddComponent<Rigidbody2D>();
+                        if(mapWalls.HasTile(localPlace)){
+                            go.AddComponent<Rigidbody2D>();
+                        }
                         //Debug.Log(walk + " tile: " + go.name);
-                    }else if(!Decormap1.HasTile(localPlace)){
+                    }else if(!Decormap.HasTile(localPlace) && !mapWalls.HasTile(localPlace)){
                         walk = true;
                         
                     }
@@ -171,11 +173,13 @@ public class TileManager : MonoBehaviour
                     tileInfo ti = tileInfo.CreateInstance<tileInfo>();
                     //t.name = name;
                     go.name = name;
-                    if(Decormap2.HasTile(localPlace)){
+                      if(Decormap.HasTile(localPlace) || mapWalls.HasTile(localPlace)){
                         walk = false;
-                        //go.AddComponent<Rigidbody2D>();
+                        if(mapWalls.HasTile(localPlace)){
+                            go.AddComponent<Rigidbody2D>();
+                        }
                         //Debug.Log(walk + " tile: " + go.name);
-                    }else if(!Decormap2.HasTile(localPlace)){
+                    }else if(!Decormap.HasTile(localPlace) && !mapWalls.HasTile(localPlace)){
                         walk = true;
                         
                     }

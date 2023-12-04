@@ -9,7 +9,7 @@ public class fov : MonoBehaviour
     [SerializeField]private GameObject daddy;
     [SerializeField]private baseGaurd b_gaurd;
     public float angle;
-    public bool playerSpotted = false;
+    
     //public int q = 1;
     private void Start(){
         mesh = new Mesh();
@@ -56,19 +56,18 @@ public class fov : MonoBehaviour
                 //vertex = hit.barycentricCoordinate;
               
                 if(hit.collider.gameObject.tag == "Player"){
-                    playerSpotted = true;
+                    this.b_gaurd.playerSpotted = true;
+                   
                     this.b_gaurd.FinalTarget = hit.collider.gameObject.GetComponent<baseUnit>().tile;
                    
-                        if(this.b_gaurd.path == null||!this.b_gaurd.path.Any()){
+                        if(this.b_gaurd.path == null){
                     this.b_gaurd.path = TileManager.FindPath(this.b_gaurd.tile, this.b_gaurd.FinalTarget);
                         
                     
                     this.b_gaurd.move();
                         }
                     }
-                    else{
-                        playerSpotted = false;
-                    }
+                    
                     //continue;
                     //b_gaurd.move();
                 
