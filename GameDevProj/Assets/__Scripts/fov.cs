@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class fov : MonoBehaviour
@@ -21,47 +23,61 @@ public class fov : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
         //daddy = this.transform.parent.gameObject;
         b_gaurd = daddy.GetComponent<baseGaurd>();
+        if (this.b_gaurd.TYPE == type.wizard)
+        {
+            eye = this.transform.gameObject;
+            startAngle = angle;
+        }
+    }
 
-    private void Update(){
-       if(this.b_gaurd.TYPE == type.gaurd){
-        if(this.b_gaurd.dir == direction.east){
-         angle = 70f;
+    public void Update()
+    {
+        if (this.b_gaurd.TYPE == type.gaurd)
+        {
+            if (this.b_gaurd.dir == direction.east)
+            {
+                angle = 70f;
+            }
+            if (this.b_gaurd.dir == direction.north)
+            {
+                angle = 160f;
+            }
+            if (this.b_gaurd.dir == direction.west)
+            {
+                this.angle = 250f;
+            }
+            if (this.b_gaurd.dir == direction.south)
+            {
+                angle = 340f;
+            }
+
+            Fov = 140f;
         }
-        if(this.b_gaurd.dir == direction.north){
-            angle = 160f;
-        }
-        if(this.b_gaurd.dir == direction.west){
-            this.angle = 250f;
-        }
-        if(this.b_gaurd.dir == direction.south){
-            angle = 340f;
-        }
-       
-         Fov = 140f;
-       }
-     
+
         Vector3 Origin = new Vector3();
-        if(this.b_gaurd.TYPE == type.wizard){
-         Origin = (eye.transform.position);
-         this.angle = startAngle;
-        Fov = 360f;
-        rayCount = 360;
-        viewDistance = 5f;
-         
+        if (this.b_gaurd.TYPE == type.wizard)
+        {
+            Origin = (eye.transform.position);
+            this.angle = startAngle;
+            Fov = 360f;
+            rayCount = 360;
+            viewDistance = 5f;
+
         }
-        if(this.b_gaurd.TYPE == type.gaurd){
-         Origin = daddy.transform.position;
-         rayCount = 360;
-         viewDistance = 10f;
+        if (this.b_gaurd.TYPE == type.gaurd)
+        {
+            Origin = daddy.transform.position;
+            rayCount = 360;
+            viewDistance = 10f;
 
         }
 
         Vector3 OriginLocal = transform.InverseTransformPoint(Origin);
-        
-        
-      
-        float angleIncrease = Fov/rayCount;
-        
+
+
+
+        float angleIncrease = Fov / rayCount;
+
 
 
         Vector3[] vertices = new Vector3[rayCount + 1 + 1];
@@ -94,55 +110,61 @@ public class fov : MonoBehaviour
                 {
                     GameObject p = hit.collider.gameObject;
 
-                    if(!this.hitList.Contains(p)){
-                    this.hitList.Add(p);
+                    if (!this.hitList.Contains(p))
+                    {
+                        this.hitList.Add(p);
                     }
                     //this.b_gaurd.playerSpotted = true;
-                   
+
                     this.b_gaurd.FinalTarget = p.GetComponent<baseUnit>().tile;
-                   if(p.GetComponent<movement>().stealth == stealth.stealthMode){
-                        if(this.b_gaurd.path == null){
-                    this.b_gaurd.path = TileManager.FindPath(this.b_gaurd.tile, this.b_gaurd.FinalTarget);
-                        
-                    if(this.b_gaurd.path != null){
-                    this.b_gaurd.move();
-                    }
+                    if (p.GetComponent<movement>().stealth == stealth.stealthMode)
+                    {
+                        if (this.b_gaurd.path == null)
+                        {
+                            this.b_gaurd.path = TileManager.FindPath(this.b_gaurd.tile, this.b_gaurd.FinalTarget);
+
+                            if (this.b_gaurd.path != null)
+                            {
+                                this.b_gaurd.move();
+                            }
                         }
-                        }
                     }
-                  
-                    
-                    //continue;
-                    //b_gaurd.move();
-                
+                }
 
             }
-            vertices[vertexIndex] = vertex;
+            //continue;
+            //b_gaurd.move();
 
-            if (i > 0)
-            {
-
-                triangles[triangleIndex + 0] = 0;
-                triangles[triangleIndex + 1] = vertexIndex - 1;
-                triangles[triangleIndex + 2] = vertexIndex;
-                triangleIndex += 3;
-            }
-            vertexIndex++;
-            angle -= angleIncrease;
 
         }
+        vertices[vertexIndex] = vertex;
 
-        if(this.hitList.Any()){
+        if (i > 0)
+        {
+
+            triangles[triangleIndex + 0] = 0;
+            triangles[triangleIndex + 1] = vertexIndex - 1;
+            triangles[triangleIndex + 2] = vertexIndex;
+            triangleIndex += 3;
+        }
+        vertexIndex++;
+        angle -= angleIncrease;
+
+
+
+        if (this.hitList.Any())
+        {
             player = p.GetComponent<playerControl>();
             this.b_gaurd.playerSpotted = true;
             this.hitList.RemoveAt(0);
             player.isSeen = this.b_gaurd.playerSpotted;
         }
-        else{
+        else
+        {
             this.b_gaurd.playerSpotted = false;
             player.isSeen = this.b_gaurd.playerSpotted;
         }
-       
+
 
         mesh.vertices = vertices;
         mesh.uv = uv;
@@ -150,7 +172,7 @@ public class fov : MonoBehaviour
 
 
     }
-  
+
 
     private static Vector3 GetVectorFromAngle(float angle)
     {
