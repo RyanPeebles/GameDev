@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 3436138205921184866, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -204,6 +204,7 @@ MonoBehaviour:
   rayCount: 0
   eye: {fileID: 0}
   startAngle: 0
+  viewDistance: 0
 --- !u!23 &9073921312423831863
 MeshRenderer:
   m_ObjectHideFlags: 0

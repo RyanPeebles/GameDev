@@ -10,7 +10,7 @@ public class baseGaurd : baseUnit
 {
     public ScriptableChar character;
     public bool moving = false;
-    
+    public GameObject startTile;
     public List<GameObject> path = null;
     public GameObject target;
     public GameObject FinalTarget;
@@ -27,6 +27,7 @@ public class baseGaurd : baseUnit
 
     void Start()
     {   
+         
         if(this.TYPE == type.gaurd){
         this.foot = gameObject.transform.GetChild(1).gameObject;
         }
@@ -34,41 +35,20 @@ public class baseGaurd : baseUnit
             this.foot = gameObject.transform.GetChild(0).gameObject;
         }
         this.path = null;
+        
     }
     void FixedUpdate(){
-     
+        if(this.startTile == null){
+            this.startTile = this.tile; 
+        }
         
-        
-        if(this.moving == true){
+        if(this.moving == true & this.path != null){
             
            
            var t = TileManager.tileList[this.target.name];
             Vector3 targetPos = TileManager.map.GetCellCenterWorld(t.pos);
             targetPos += new Vector3(0,.5f,-1);
-            float angle  = Vector3.SignedAngle(new Vector3(1,0,0),targetPos - this.transform.position,Vector3.up);
-           Debug.Log(angle);
-           if(angle >= 0f){
-                if(angle <= 45f){
-                    this.dir = direction.east;
-                }
-                if(45f < angle && angle <= 135f){
-                    this.dir = direction.north;
-                }
-                    
-                if(135f < angle && angle <= 180f){
-                    this.dir = direction.west;
-                }
-           }else{
-            if(angle > -45f){
-                this.dir = direction.east;
-            }
-            if(angle > -135f && angle <= -45f){
-                    this.dir = direction.south;
-             }
-             if(angle >= -180 && angle <= -135){
-                this.dir = direction.west;
-             }
-           }
+          
             
             StartCoroutine(step(targetPos));
            
@@ -85,7 +65,7 @@ public class baseGaurd : baseUnit
     }
     public void move(){
        
-        if(this.path != null && this.chasing == false){
+        if(this.path != null){
            
             StartCoroutine(this.walkDaLine(this.path));
         }
@@ -93,7 +73,12 @@ public class baseGaurd : baseUnit
     }
     
     IEnumerator walkDaLine(List<GameObject> t){
+        if(this.FinalTarget != this.startTile && !this.playerSpotted){
         this.chasing = true;
+        }
+        else{
+            this.chasing = false;
+        }
         this.cnt = t.Count;
        
            foreach(var tl in t){
@@ -118,15 +103,16 @@ public class baseGaurd : baseUnit
    
    
    
-     if(this.tile != this.FinalTarget){
-        this.playerSpotted = false;
-        this.moving = false;
+     if(this.tile != this.FinalTarget && this.playerSpotted == false){
+        
+        if(this.FinalTarget !=null){
         this.path = TileManager.FindPath(this.tile,this.FinalTarget);
+        }
         if(this.path!= null){
          StartCoroutine(this.walkDaLine(this.path));
         }
     }
-    else{this.chasing = false;}
+    else{this.chasing = false; this.FinalTarget = this.startTile;}
     }
     
 }
