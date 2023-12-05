@@ -15,6 +15,7 @@ public class baseGaurd : baseUnit
     public GameObject target;
     public GameObject FinalTarget;
     public direction dir;
+    public float gspeed = .015f;
     public bool chasing = false;
     public bool playerSpotted = false;
     
@@ -38,7 +39,31 @@ public class baseGaurd : baseUnit
            var t = TileManager.tileList[this.target.name];
             Vector3 targetPos = TileManager.map.GetCellCenterWorld(t.pos);
             targetPos += new Vector3(0,.5f,-1);
-           
+            float angle  = Vector3.SignedAngle(new Vector3(1,0,0),targetPos - this.transform.position,Vector3.up);
+           Debug.Log(angle);
+           if(angle >= 0f){
+                if(angle <= 45f){
+                    this.dir = direction.east;
+                }
+                if(45f < angle && angle <= 135f){
+                    this.dir = direction.north;
+                }
+                    
+                if(135f < angle && angle <= 180f){
+                    this.dir = direction.west;
+                }
+           }else{
+            if(angle > -45f){
+                this.dir = direction.east;
+            }
+            if(angle > -135f && angle <= -45f){
+                    this.dir = direction.south;
+             }
+             if(angle >= -180 && angle <= -135){
+                this.dir = direction.west;
+             }
+           }
+            
             StartCoroutine(step(targetPos));
            
             
@@ -47,7 +72,7 @@ public class baseGaurd : baseUnit
     else{this.moving = false;}
     }
     IEnumerator step(Vector3 tp){
-        this.transform.position = Vector3.MoveTowards(this.transform.position, tp, .015f);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, tp, this.gspeed);
         
         yield return new WaitUntil(()=>(this.transform.position == tp ));
         this.moving = false;
