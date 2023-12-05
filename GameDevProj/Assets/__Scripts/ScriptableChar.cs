@@ -24,7 +24,8 @@ public class ScriptableChar : ScriptableObject
 public enum type{
     player,
     npc,
-    gaurd
+    gaurd,
+    wizard
 }
 public enum skins{
     Knight,

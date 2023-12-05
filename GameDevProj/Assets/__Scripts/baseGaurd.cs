@@ -15,6 +15,7 @@ public class baseGaurd : baseUnit
     public GameObject target;
     public GameObject FinalTarget;
     public direction dir;
+    public type TYPE;
     public float gspeed = .015f;
     public bool chasing = false;
     public bool playerSpotted = false;
@@ -25,8 +26,13 @@ public class baseGaurd : baseUnit
 
 
     void Start()
-    {
+    {   
+        if(this.TYPE == type.gaurd){
         this.foot = gameObject.transform.GetChild(1).gameObject;
+        }
+        if(this.TYPE == type.wizard){
+            this.foot = gameObject.transform.GetChild(0).gameObject;
+        }
         this.path = null;
     }
     void FixedUpdate(){
@@ -69,7 +75,7 @@ public class baseGaurd : baseUnit
             
 
     }
-    else{this.moving = false;}
+    
     }
     IEnumerator step(Vector3 tp){
         this.transform.position = Vector3.MoveTowards(this.transform.position, tp, this.gspeed);
@@ -116,7 +122,9 @@ public class baseGaurd : baseUnit
         this.playerSpotted = false;
         this.moving = false;
         this.path = TileManager.FindPath(this.tile,this.FinalTarget);
+        if(this.path!= null){
          StartCoroutine(this.walkDaLine(this.path));
+        }
     }
     else{this.chasing = false;}
     }
