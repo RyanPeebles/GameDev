@@ -8,14 +8,13 @@ public class fov : MonoBehaviour
     [SerializeField] private GameObject daddy;
     [SerializeField] private baseGaurd b_gaurd;
     public float angle;
+    public playerControl player;
     public List<GameObject> hitList;
     public float Fov;
     public int rayCount;
     public GameObject eye;
     public float startAngle;
     public float viewDistance;
-
-    public playerControl player;
 
     //public int q = 1;
     private void Start()
@@ -30,6 +29,7 @@ public class fov : MonoBehaviour
             startAngle = angle;
         }
     }
+
     public void Update()
     {
         if (this.b_gaurd.TYPE == type.gaurd)
@@ -109,8 +109,6 @@ public class fov : MonoBehaviour
                 if (hit.collider.gameObject.tag == "Player")
                 {
                     GameObject p = hit.collider.gameObject;
-                    player = p.GetComponent<playerControl>();
-                    if (player != null) { player.isSeen = this.b_gaurd.playerSpotted; }
 
                     if (!this.hitList.Contains(p))
                     {
@@ -133,41 +131,38 @@ public class fov : MonoBehaviour
                     }
                 }
 
-
-                //continue;
-                //b_gaurd.move();
-
-
             }
-            vertices[vertexIndex] = vertex;
+            //continue;
+            //b_gaurd.move();
 
-            if (i > 0)
-            {
-
-                triangles[triangleIndex + 0] = 0;
-                triangles[triangleIndex + 1] = vertexIndex - 1;
-                triangles[triangleIndex + 2] = vertexIndex;
-                triangleIndex += 3;
-            }
-            vertexIndex++;
-            angle -= angleIncrease;
 
         }
-        if (this.hitList.Any())
+        vertices[vertexIndex] = vertex;
+
+        if (i > 0)
         {
 
+            triangles[triangleIndex + 0] = 0;
+            triangles[triangleIndex + 1] = vertexIndex - 1;
+            triangles[triangleIndex + 2] = vertexIndex;
+            triangleIndex += 3;
+        }
+        vertexIndex++;
+        angle -= angleIncrease;
+
+
+
+        if (this.hitList.Any())
+        {
+            player = p.GetComponent<playerControl>();
             this.b_gaurd.playerSpotted = true;
             this.hitList.RemoveAt(0);
-            if (player != null) { player.isSeen = this.b_gaurd.playerSpotted; }
+            player.isSeen = this.b_gaurd.playerSpotted;
         }
         else
         {
             this.b_gaurd.playerSpotted = false;
-            if (player != null)
-            {
-                player.isSeen = this.b_gaurd.playerSpotted;
-                player.running = false;
-            }
+            player.isSeen = this.b_gaurd.playerSpotted;
         }
 
 

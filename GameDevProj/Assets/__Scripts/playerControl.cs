@@ -93,10 +93,6 @@ public class playerControl : basePlayer
 
     IEnumerator Delay()
     {
-        while (stars[starNum].GetComponent<Image>().color == Color.white)
-        {
-            starNum++;
-        }
         Debug.Log("start blinking");
         blinking = true;
         StartCoroutine(Blink());
