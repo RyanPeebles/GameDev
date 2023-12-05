@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3533319788290009573}
   - component: {fileID: 412840650763367675}
   - component: {fileID: 438345284022549712}
-  - component: {fileID: 531721151179645793}
   m_Layer: 0
   m_Name: fov
   m_TagString: Untagged
@@ -51,6 +50,12 @@ MonoBehaviour:
   daddy: {fileID: 3339252097476739999}
   b_gaurd: {fileID: 0}
   angle: 0
+  hitList: []
+  Fov: 0
+  rayCount: 0
+  eye: {fileID: 0}
+  startAngle: 0
+  viewDistance: 0
 --- !u!23 &412840650763367675
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -101,22 +106,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709807450965526917}
   m_Mesh: {fileID: 0}
---- !u!114 &531721151179645793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1709807450965526917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d04124f3bfb312f4f9fd62307804b8f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  daddy: {fileID: 0}
-  bgaurd: {fileID: 0}
-  bPlayer: {fileID: 0}
-  Instance: {fileID: 0}
 --- !u!1 &3339252097476739999
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +135,7 @@ Transform:
   m_GameObject: {fileID: 3339252097476739999}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.37, y: -0.66, z: -1}
+  m_LocalPosition: {x: -96.8, y: -13, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -224,7 +213,12 @@ MonoBehaviour:
   moving: 0
   path: []
   target: {fileID: 0}
+  FinalTarget: {fileID: 0}
   dir: 0
+  TYPE: 2
+  gspeed: 0.015
+  chasing: 0
+  playerSpotted: 0
   cnt: 0
   q: 1
 --- !u!50 &2770915929871516265
@@ -392,7 +386,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.008899212, y: -0.6836332}
+  m_Offset: {x: -0.006336212, y: -0.6529292}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -403,7 +397,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.011963844, y: 0.13273358}
+  m_Size: {x: 0.25066376, y: 0.07132554}
   m_EdgeRadius: 0
 --- !u!114 &8634302764991901994
 MonoBehaviour:
@@ -420,4 +414,8 @@ MonoBehaviour:
   daddy: {fileID: 0}
   bgaurd: {fileID: 0}
   bPlayer: {fileID: 0}
+  tr: {fileID: 0}
+  tr2: {fileID: 0}
+  colliding: 0
+  speed: 1
   Instance: {fileID: 0}
