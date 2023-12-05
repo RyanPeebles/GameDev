@@ -33,7 +33,7 @@ public class Timer : MonoBehaviour
             timerText.text = string.Format("{0:00}:{1:00}", min, sec);
             min_e = Mathf.FloorToInt(time_elapsed / 60);
             sec_e = Mathf.FloorToInt(time_elapsed % 60);
-            elapsedText.text = string.Format("Elapsed Time: {0:00}:{1:00}", min_e, sec_e);
+            elapsedText.text = string.Format("Time taken: {0:00}:{1:00}", min_e, sec_e);
         }
     }
 }
