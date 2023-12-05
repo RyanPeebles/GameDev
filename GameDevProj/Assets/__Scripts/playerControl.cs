@@ -22,6 +22,7 @@ public class playerControl : basePlayer
     public float initialTime;
     public bool running = false;
     int starNum = 0;
+    public bool blinking = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,14 +36,7 @@ public class playerControl : basePlayer
     // Update is called once per frame
     void Update()
     {
-        if (guardCheck != null)
-        {
-            isSeen = guardCheck.playerSpotted;
-        }
-        else
-        {
-            isSeen = false;
-        }
+
         if (Input.GetKeyDown(KeyCode.E) && pickupable)
         {
             pickup();
@@ -100,10 +94,12 @@ public class playerControl : basePlayer
     IEnumerator Delay()
     {
         Debug.Log("start blinking");
+        blinking = true;
         StartCoroutine(Blink());
-        yield return new WaitForSeconds(.01f);
+        yield return new WaitForSeconds(5f);
+        blinking = false;
         StopCoroutine(Blink());
-        stars[starNum].GetComponent<Image>().color = new Color32(255, 255, 225, 255);
+        stars[starNum].GetComponent<Image>().color = Color.white;
         starNum++;
         Debug.Log("make next blink");
         if (isSeen)
@@ -114,11 +110,24 @@ public class playerControl : basePlayer
 
     IEnumerator Blink()
     {
-        stars[starNum].GetComponent<Image>().color = new Color32(255, 255, 225, 255);
-        yield return new WaitForSeconds(0.2f);
-        stars[starNum].GetComponent<Image>().color = new Color32(0, 0, 0, 255);
-        yield return new WaitForSeconds(0.2f);
 
+        while (blinking)
+        {
+            Blinking();
+            yield return new WaitForSeconds(.2f);
+        }
 
+    }
+
+    public void Blinking()
+    {
+        if (stars[starNum].GetComponent<Image>().color == Color.white)
+        {
+            stars[starNum].GetComponent<Image>().color = Color.black;
+        }
+        else
+        {
+            stars[starNum].GetComponent<Image>().color = Color.white;
+        }
     }
 }
