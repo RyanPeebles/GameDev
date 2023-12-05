@@ -56,15 +56,17 @@ public class fov : MonoBehaviour
                 //vertex = hit.barycentricCoordinate;
               
                 if(hit.collider.gameObject.tag == "Player"){
+                    GameObject p = hit.collider.gameObject;
                     this.b_gaurd.playerSpotted = true;
                    
-                    this.b_gaurd.FinalTarget = hit.collider.gameObject.GetComponent<baseUnit>().tile;
-                   
+                    this.b_gaurd.FinalTarget = p.GetComponent<baseUnit>().tile;
+                   if(p.GetComponent<movement>().stealth == stealth.stealthMode){
                         if(this.b_gaurd.path == null){
                     this.b_gaurd.path = TileManager.FindPath(this.b_gaurd.tile, this.b_gaurd.FinalTarget);
                         
                     
                     this.b_gaurd.move();
+                        }
                         }
                     }
                     
