@@ -15,6 +15,7 @@ public class fov : MonoBehaviour
     public GameObject eye;
     public float startAngle;
     public float viewDistance;
+    public bool searching = false;
 
     //public int q = 1;
     private void Start(){
@@ -27,8 +28,29 @@ public class fov : MonoBehaviour
             startAngle = angle;
         }
     }
-    private void Update(){
-       if(this.b_gaurd.TYPE == type.gaurd){
+   IEnumerator returnToSpot(){
+    if(this.searching){
+        this.searching = false;
+        yield break;
+    }
+    else{
+    this.searching = true;
+    }
+    yield return new WaitForSeconds(7);
+        this.searching = false;
+        if(this.b_gaurd.path == null){
+        this.b_gaurd.path = TileManager.FindPath(this.b_gaurd.tile, this.b_gaurd.startTile);
+            this.b_gaurd.move();
+   }}
+    private void LateUpdate(){
+        if(!this.b_gaurd.playerSpotted && !this.b_gaurd.chasing){
+            if(this.b_gaurd.startTile != this.b_gaurd.tile && this.b_gaurd.tile!=null){
+                if(searching == false){
+           StartCoroutine(returnToSpot());
+                }
+            }
+        }
+      /* if(this.b_gaurd.TYPE == type.gaurd){
         if(this.b_gaurd.dir == direction.east){
          angle = 70f;
         }
@@ -44,11 +66,11 @@ public class fov : MonoBehaviour
        
          Fov = 140f;
        }
-     
+     */
         Vector3 Origin = new Vector3();
         if(this.b_gaurd.TYPE == type.wizard){
          Origin = (eye.transform.position);
-         this.angle = startAngle;
+         //this.angle = startAngle;
         Fov = 360f;
         rayCount = 360;
         viewDistance = 5f;
@@ -57,10 +79,25 @@ public class fov : MonoBehaviour
         if(this.b_gaurd.TYPE == type.gaurd){
          Origin = daddy.transform.position;
          rayCount = 360;
-         viewDistance = 10f;
+         viewDistance = 7f;
+         Fov = 140f;
 
         }
-
+        try{
+            
+            Vector3 temp = new Vector3();
+            Vector3 temp2 = new Vector3();
+            temp = TileManager.tileList[this.b_gaurd.FinalTarget.name].obj.transform.position;
+            temp2 = temp - Origin;
+            SetDirection(temp2);
+           this.angle = startAngle -205f;
+            
+          
+        
+        }
+        catch{
+            this.angle = 45f;
+        }
         Vector3 OriginLocal = transform.InverseTransformPoint(Origin);
         
         
@@ -101,8 +138,11 @@ public class fov : MonoBehaviour
                    
                     this.b_gaurd.FinalTarget = p.GetComponent<baseUnit>().tile;
                    if(p.GetComponent<movement>().stealth == stealth.stealthMode){
+                    if(this.b_gaurd.playerSpotted && this.b_gaurd.path != null){this.b_gaurd.path = null;}
                         if(this.b_gaurd.path == null){
+                            if(TileManager.tileList[this.b_gaurd.FinalTarget.name].walkable){
                     this.b_gaurd.path = TileManager.FindPath(this.b_gaurd.tile, this.b_gaurd.FinalTarget);
+                            }
                         
                     if(this.b_gaurd.path != null){
                     this.b_gaurd.move();
@@ -150,5 +190,17 @@ public class fov : MonoBehaviour
     private static Vector3 GetVectorFromAngle(float angle) {
         float angleRad = angle * (Mathf.PI / 180f);
         return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
+    }
+
+    private static float GetAngleFromFloat(Vector3 dir){
+        dir = dir.normalized;
+        float n = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+        if(n < 0){
+            n+=360;
+        }
+        return n;
+    }
+    public void SetDirection(Vector3 AimDir){
+        startAngle = GetAngleFromFloat(AimDir)- this.Fov /2f;
     }
 }

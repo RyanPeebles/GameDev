@@ -229,6 +229,7 @@ MonoBehaviour:
   foot: {fileID: 2002845232435289890}
   character: {fileID: 0}
   moving: 0
+  startTile: {fileID: 0}
   path: []
   target: {fileID: 0}
   FinalTarget: {fileID: 0}
