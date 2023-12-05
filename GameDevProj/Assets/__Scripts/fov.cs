@@ -10,17 +10,25 @@ public class fov : MonoBehaviour
     [SerializeField]private baseGaurd b_gaurd;
     public float angle;
     public List<GameObject> hitList;
-    
+    public float Fov;
+    public int rayCount;
+    public GameObject eye;
+    public float startAngle;
+    public float viewDistance;
+
     //public int q = 1;
     private void Start(){
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-        daddy = this.transform.parent.gameObject;
+        //daddy = this.transform.parent.gameObject;
         b_gaurd = daddy.GetComponent<baseGaurd>();
-        
+        if(this.b_gaurd.TYPE == type.wizard){
+            eye = this.transform.gameObject;
+            startAngle = angle;
+        }
     }
-    private void FixedUpdate(){
-       
+    private void Update(){
+       if(this.b_gaurd.TYPE == type.gaurd){
         if(this.b_gaurd.dir == direction.east){
          angle = 70f;
         }
@@ -33,16 +41,32 @@ public class fov : MonoBehaviour
         if(this.b_gaurd.dir == direction.south){
             angle = 340f;
         }
-        float Fov = 140f;
-        Vector3 Origin = daddy.transform.position;
        
+         Fov = 140f;
+       }
+     
+        Vector3 Origin = new Vector3();
+        if(this.b_gaurd.TYPE == type.wizard){
+         Origin = (eye.transform.position);
+         this.angle = startAngle;
+        Fov = 360f;
+        rayCount = 360;
+        viewDistance = 5f;
+         
+        }
+        if(this.b_gaurd.TYPE == type.gaurd){
+         Origin = daddy.transform.position;
+         rayCount = 360;
+         viewDistance = 10f;
+
+        }
 
         Vector3 OriginLocal = transform.InverseTransformPoint(Origin);
         
-        int rayCount = 360;
+        
       
         float angleIncrease = Fov/rayCount;
-        float viewDistance = 10f;
+        
 
 
         Vector3[] vertices = new Vector3[rayCount + 1 + 1];
@@ -80,8 +104,9 @@ public class fov : MonoBehaviour
                         if(this.b_gaurd.path == null){
                     this.b_gaurd.path = TileManager.FindPath(this.b_gaurd.tile, this.b_gaurd.FinalTarget);
                         
-                    
+                    if(this.b_gaurd.path != null){
                     this.b_gaurd.move();
+                    }
                         }
                         }
                     }
