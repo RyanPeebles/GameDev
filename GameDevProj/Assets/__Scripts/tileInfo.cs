@@ -26,7 +26,7 @@ public class tileInfo : ScriptableObject{
     public Vector3Int pos;
     public TileBase tile;
     public tileInfo Instance;
-    public bool walkable = true;
+    public bool walkable;
    public float G {get; private set;}
     public float H {get; private set;}
     public float F => G + H;

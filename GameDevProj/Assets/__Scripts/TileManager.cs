@@ -49,6 +49,7 @@ public class TileManager : MonoBehaviour
         t.Value.SetLayer();
         
         }
+        Debug.Log("Map logged");
     }
 
 
@@ -84,7 +85,7 @@ public class TileManager : MonoBehaviour
                         if(mapWalls.HasTile(localPlace)){
                             go.AddComponent<Rigidbody2D>();
                         }
-                        //Debug.Log(walk + " tile: " + go.name);
+                      
                     }else if(!Decormap.HasTile(localPlace) && !mapWalls.HasTile(localPlace)){
                         walk = true;
                         
@@ -126,13 +127,13 @@ public class TileManager : MonoBehaviour
                     tileInfo ti = tileInfo.CreateInstance<tileInfo>();
                     //t.name = name;
                     go.name = name;
-                      if(Decormap.HasTile(localPlace) || mapWalls.HasTile(localPlace)){
+                      if(Decormap1.HasTile(localPlace) || mapWalls.HasTile(localPlace)){
                         walk = false;
                         if(mapWalls.HasTile(localPlace)){
                             go.AddComponent<Rigidbody2D>();
                         }
-                        //Debug.Log(walk + " tile: " + go.name);
-                    }else if(!Decormap.HasTile(localPlace) && !mapWalls.HasTile(localPlace)){
+                      
+                    }else if(!Decormap1.HasTile(localPlace) && !mapWalls.HasTile(localPlace)){
                         walk = true;
                         
                     }
@@ -173,13 +174,13 @@ public class TileManager : MonoBehaviour
                     tileInfo ti = tileInfo.CreateInstance<tileInfo>();
                     //t.name = name;
                     go.name = name;
-                      if(Decormap.HasTile(localPlace) || mapWalls.HasTile(localPlace)){
+                      if(Decormap2.HasTile(localPlace) || mapWalls.HasTile(localPlace)){
                         walk = false;
                         if(mapWalls.HasTile(localPlace)){
                             go.AddComponent<Rigidbody2D>();
                         }
-                        //Debug.Log(walk + " tile: " + go.name);
-                    }else if(!Decormap.HasTile(localPlace) && !mapWalls.HasTile(localPlace)){
+                        
+                    }else if(!Decormap2.HasTile(localPlace) && !mapWalls.HasTile(localPlace)){
                         walk = true;
                         
                     }
@@ -212,25 +213,24 @@ public class TileManager : MonoBehaviour
 
         public static List<GameObject> FindPath(GameObject start, GameObject target){
             Debug.Log("finding path");
-           // Debug.Log("target "+ target);
+          
         var toSearch = new List<GameObject>() {start};
         var processed = new List<GameObject>();
        
         var targetInfo = TileManager.tileList[target.name];
         while(toSearch.Any()){
             var current = toSearch[0];
-            //Debug.Log(current.name);
-           // Debug.Log("l = " + toSearch.Count);
+         
          
             var currentInfo = TileManager.tileList[current.name];
-            //Debug.Log(currentInfo.Name);
+            
             foreach(var t in toSearch){
-                //Debug.Log("checking "+ t.name);
+               
                  var info = TileManager.tileList[t.name];
                 
                 if(info.F < currentInfo.F || info.F == currentInfo.F && info.H < currentInfo.H) {current = t;
                     currentInfo = TileManager.tileList[current.name];
-                //Debug.Log("current = " + t.name);
+                
                 }
             }
 
@@ -238,7 +238,7 @@ public class TileManager : MonoBehaviour
                 toSearch.Remove(current);
 
                 if( current == target){
-                    //Debug.Log("target = current");
+                   
                     var currentPath = target;
                     var path = new List<GameObject>();
                     var count = 100;
@@ -249,7 +249,7 @@ public class TileManager : MonoBehaviour
                         currentPath = currentPathInfo.Connection;
                         count--;
                         if(count < 0) {throw new Exception();}
-                        //Debug.Log(count);
+                        
                     
                     }
                     path.Reverse();
@@ -259,12 +259,11 @@ public class TileManager : MonoBehaviour
                     
                
                 foreach (var neighbor in currentInfo.neighbors.Where(t => !processed.Contains(t) && TileManager.tileList[t.name].walkable)) {
-                    //Debug.Log(neighbor.name + " is neighbor of " + currentInfo.obj.name);
+                    
                     var inSearch = toSearch.Contains(neighbor);
                     var neighborInfo = TileManager.tileList[neighbor.name];
                     var costToNeighbor = currentInfo.G + currentInfo.GetDistance(neighbor);
-                    //Debug.Log("Cost to neigh:" + costToNeighbor);
-                   // Debug.Log("G:" + neighborInfo.G);
+                    
 
                     if (!inSearch || costToNeighbor < neighborInfo.G) {
                         neighborInfo.SetG(costToNeighbor);
@@ -273,7 +272,7 @@ public class TileManager : MonoBehaviour
                         if (!inSearch) {
                             neighborInfo.SetH(neighborInfo.GetDistance(target));
                             toSearch.Add(neighbor);
-                            //Debug.Log("COntain neighbor");
+                            
                            
                         }
                     }
