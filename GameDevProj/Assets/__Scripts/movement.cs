@@ -48,7 +48,7 @@ public class movement : basePlayer
             else
             {
                 Instance.stealth = stealth.StandMode;
-
+                anim.SetBool("crouch", false);
             }
 
         }
