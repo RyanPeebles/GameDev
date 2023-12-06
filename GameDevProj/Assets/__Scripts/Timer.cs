@@ -8,6 +8,11 @@ public class Timer : MonoBehaviour
     public float totalTime;
     public float time_elapsed;
     public float initial_value;
+    public float min;
+    public float sec;
+    public float min_e;
+    public float sec_e;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +28,12 @@ public class Timer : MonoBehaviour
                 totalTime -= Time.deltaTime;
                 time_elapsed = initial_value - totalTime;
             }
-            float min = Mathf.FloorToInt(totalTime / 60);
-            float sec = Mathf.FloorToInt(totalTime % 60);
-            timerText.text = string.Format("{0,00}:{1,00}", min, sec);
-            float min_e = Mathf.FloorToInt(time_elapsed / 60);
-            float sec_e = Mathf.FloorToInt(time_elapsed % 60);
-            elapsedText.text = string.Format("Elapsed Time: {0,00}:{1,00}", min_e, sec_e);
+            min = Mathf.FloorToInt(totalTime / 60);
+            sec = Mathf.FloorToInt(totalTime % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", min, sec);
+            min_e = Mathf.FloorToInt(time_elapsed / 60);
+            sec_e = Mathf.FloorToInt(time_elapsed % 60);
+            elapsedText.text = string.Format("Time taken: {0:00}:{1:00}", min_e, sec_e);
         }
     }
 }
