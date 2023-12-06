@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject gameMusic;
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject levelEnd;
+    [SerializeField] playerControl player;
 
     public static bool GameIsPaused = false;
     public float setVolume;
@@ -56,7 +57,10 @@ public class PauseMenu : MonoBehaviour
             deathMenu.SetActive(true);
 
         }
-
+        if (player.health <= 0)
+        {
+            Death();
+        }
     }
 
     public void Tutorial()
@@ -66,7 +70,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Death()
     {
-        gameMusic.SetActive(false);
+        //gameMusic.SetActive(false);
         deathMenu.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;

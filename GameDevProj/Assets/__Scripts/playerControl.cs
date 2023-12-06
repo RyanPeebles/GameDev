@@ -26,6 +26,13 @@ public class playerControl : basePlayer
     public bool isPicking = false;
     public bool blink2;
     public bool trouble = false;
+    public int health = 3;
+    public bool invincible = false;
+    public float spriteBlinkingTimer = 0.0f;
+    public float spriteBlinkingMiniDuration = 0.1f;
+    public float spriteBlinkingTotalTimer = 0.0f;
+    public float spriteBlinkingTotalDuration = 1.5f;
+    public bool startBlinking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +81,10 @@ public class playerControl : basePlayer
         {
             starNum = 4;
         }
+        if (startBlinking)
+        {
+            SpriteBlinkingEffect();
+        }
     }
 
     public void increaseGold()
@@ -109,6 +120,13 @@ public class playerControl : basePlayer
           
         }
 */
+        if (coll.CompareTag("gaurd") && !invincible)
+        {
+            health--;
+            invincible = true;
+            startBlinking = true;
+            StartCoroutine(DamageDelay());
+        }
     }
 
     public void StarLevel()
@@ -169,5 +187,42 @@ public class playerControl : basePlayer
         }
         running = false;
         yield break;
+    }
+
+    IEnumerator DamageDelay()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        invincible = false;
+    }
+
+    public void SpriteBlinkingEffect()
+    {
+        spriteBlinkingTotalTimer += Time.deltaTime;
+        if (spriteBlinkingTotalTimer >= spriteBlinkingTotalDuration)
+        {
+            startBlinking = false;
+
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;   // according to 
+
+            spriteBlinkingTotalTimer = 0.0f;//your sprite
+            return;
+        }
+        Debug.Log(Time.deltaTime);
+        spriteBlinkingTimer += Time.deltaTime;
+        Debug.Log(spriteBlinkingTimer);
+        Debug.Log(spriteBlinkingMiniDuration);
+        if (spriteBlinkingTimer >= spriteBlinkingMiniDuration)
+        {
+            if (this.gameObject.GetComponent<SpriteRenderer>().enabled == true)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().enabled = false;  //make changes
+            }
+            else
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().enabled = true;   //make changes
+            }
+            spriteBlinkingTimer = 0.0f;
+        }
     }
 }
