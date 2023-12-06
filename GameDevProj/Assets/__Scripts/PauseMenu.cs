@@ -64,10 +64,12 @@ public class PauseMenu : MonoBehaviour
         health.text = "HP: " + player.health;
         if (time.totalTime <= 0)
         {
+            PlayerPrefs.DeleteAll();
             Death();
         }
         if (player.health <= 0)
         {
+            PlayerPrefs.DeleteAll();
             Death();
         }
     }
