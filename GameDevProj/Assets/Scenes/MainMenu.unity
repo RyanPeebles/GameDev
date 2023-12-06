@@ -2012,7 +2012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1719413038953956060, guid: 7b95a96a84e74c54aa443845ff2aad52, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1754072942772903606, guid: 7b95a96a84e74c54aa443845ff2aad52, type: 3}
       propertyPath: m_SizeDelta.x

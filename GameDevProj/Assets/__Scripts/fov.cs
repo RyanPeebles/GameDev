@@ -52,7 +52,9 @@ public class fov : MonoBehaviour
         }
     }
     public void LateUpdate()
+    
     {
+        
         if (player != null && this.b_gaurd.playerSpotted == true) { player.isSeen = true; } else if (player != null && this.b_gaurd.playerSpotted == false) { player.isSeen = false; }
 
 
