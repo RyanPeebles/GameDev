@@ -51,8 +51,11 @@ public class fov : MonoBehaviour
             this.b_gaurd.move();
         }
     }
-    private void LateUpdate()
+    public void LateUpdate()
     {
+        if (player != null && this.b_gaurd.playerSpotted == true) { player.isSeen = true; } else if (player != null && this.b_gaurd.playerSpotted == false) { player.isSeen = false; }
+
+
         if (!this.b_gaurd.playerSpotted && !this.b_gaurd.chasing)
         {
             if (this.b_gaurd.startTile != this.b_gaurd.tile && this.b_gaurd.tile != null)
@@ -200,14 +203,19 @@ public class fov : MonoBehaviour
         }
         if (this.hitList.Any())
         {
+            player = GameObject.Find("Player").GetComponent<playerControl>();
+            if (player != null) { player.isSeen = true; }
             this.b_gaurd.playerSpotted = true;
-            if (player != null) player.isSeen = true;
+
+            if (player != null) { player.isSeen = true; }
             this.hitList.RemoveAt(0);
         }
         else
         {
+            if (player != null) { player.isSeen = false; }
+            player = null;
             this.b_gaurd.playerSpotted = false;
-            if (player != null) player.isSeen = false;
+            if (player != null) { player.isSeen = false; }
         }
 
 

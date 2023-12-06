@@ -1478,11 +1478,16 @@ MonoBehaviour:
   deathMenu: {fileID: 0}
   gameMusic: {fileID: 0}
   settingsMenu: {fileID: 1371357887}
+  levelEnd: {fileID: 0}
+  player: {fileID: 0}
   setVolume: 0
   resolution: {fileID: 1726294351}
   screenType: {fileID: 837461562}
+  health: {fileID: 0}
   dropdownName: 
+  time: {fileID: 0}
   sliderVal1: {fileID: 1510024501}
+  mainmenu: 1
 --- !u!1 &1371357887 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1719413038953956060, guid: 7b95a96a84e74c54aa443845ff2aad52, type: 3}

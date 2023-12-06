@@ -39,7 +39,6 @@ public class playerControl : basePlayer
     {
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
-        text.text = "Gold: " + goldValue;
         Instance = this;
         isSeen = false;
         if (PlayerPrefs.GetInt("health") != 0) health = PlayerPrefs.GetInt("health");
