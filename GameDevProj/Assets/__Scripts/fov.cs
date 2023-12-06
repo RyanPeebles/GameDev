@@ -7,7 +7,7 @@ public class fov : MonoBehaviour
 {
     [SerializeField] private Mesh mesh;
     [SerializeField] private GameObject daddy;
-    [SerializeField] private baseGaurd b_gaurd;
+    [SerializeField] public baseGaurd b_gaurd;
     public float angle;
     public List<GameObject> hitList;
     public float Fov;
@@ -28,7 +28,7 @@ public class fov : MonoBehaviour
         if (this.b_gaurd.TYPE == type.wizard)
         {
             eye = this.transform.gameObject;
-            
+
         }
         this.startAngle = this.angle;
     }

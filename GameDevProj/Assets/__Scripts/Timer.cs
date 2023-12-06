@@ -17,6 +17,7 @@ public class Timer : MonoBehaviour
     void Start()
     {
         initial_value = totalTime;
+        if (PlayerPrefs.GetFloat("time") != 0) totalTime = PlayerPrefs.GetFloat("time");
     }
 
     // Update is called once per frame
@@ -34,6 +35,9 @@ public class Timer : MonoBehaviour
             min_e = Mathf.FloorToInt(time_elapsed / 60);
             sec_e = Mathf.FloorToInt(time_elapsed % 60);
             elapsedText.text = string.Format("Time taken: {0:00}:{1:00}", min_e, sec_e);
+
+            PlayerPrefs.SetFloat("time", totalTime);
         }
+
     }
 }

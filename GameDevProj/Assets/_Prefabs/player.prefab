@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3626584268156728736}
   - component: {fileID: 5258585040578120372}
   - component: {fileID: 1535925288742836058}
-  m_Layer: 2
+  m_Layer: 3
   m_Name: feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,8 +60,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &3626584268156728736
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -91,10 +91,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00011745095, y: -0.6401536}
+  m_Offset: {x: 0, y: -0.64410007}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -105,7 +105,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.24952972, y: 0.09794986}
+  m_Size: {x: 0.25061798, y: 0.08902764}
   m_EdgeRadius: 0
 --- !u!114 &5258585040578120372
 MonoBehaviour:
@@ -126,7 +126,9 @@ MonoBehaviour:
   tr2: {fileID: 0}
   colliding: 0
   speed: 1
+  baseSpeed: 2
   Instance: {fileID: 0}
+  Player_anim: {fileID: 0}
 --- !u!95 &1535925288742836058
 Animator:
   serializedVersion: 5
@@ -135,7 +137,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3532675126379136743}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6e32b332f42754ede9b56017e4d5ed6f, type: 2}
   m_CullingMode: 0
@@ -163,8 +165,9 @@ GameObject:
   - component: {fileID: 6128317707766162609}
   - component: {fileID: 9207840673536584080}
   - component: {fileID: 1905370042603066086}
-  - component: {fileID: 5993784087868471651}
-  m_Layer: 0
+  - component: {fileID: 1237847928603730799}
+  - component: {fileID: 5578330600058921374}
+  m_Layer: 3
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -260,6 +263,7 @@ MonoBehaviour:
   speed: 1
   Instance: {fileID: 0}
   pc: {fileID: 0}
+  anim: {fileID: 5578330600058921374}
 --- !u!114 &4383468628111652688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,18 +278,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   foot: {fileID: 3532675126379136743}
-  character: {fileID: 0}
+  character: {fileID: 11400000, guid: 764da7f3850cc734e9cb9e65dc8e6405, type: 2}
   stealth: 0
   goldValue: 0
   rigid: {fileID: 0}
   coll: {fileID: 0}
   item: {fileID: 0}
   text: {fileID: 0}
-  Instance: {fileID: 0}
-  stealthed: {fileID: 0}
+  Instance: {fileID: 1407767194, guid: 2cda990e2423bbf4892e6590ba056729, type: 2}
+  stealthed: {fileID: 3187680246583629482}
   guardCheck: {fileID: 0}
   isSeen: 0
-  stars: []
+  stars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   interval: 5
   time: {fileID: 0}
   initialTime: 0
@@ -295,6 +304,13 @@ MonoBehaviour:
   isPicking: 0
   blink2: 0
   trouble: 0
+  health: 3
+  invincible: 0
+  spriteBlinkingTimer: 0
+  spriteBlinkingMiniDuration: 0.1
+  spriteBlinkingTotalTimer: 0
+  spriteBlinkingTotalDuration: 1
+  startBlinking: 0
 --- !u!61 &6128317707766162609
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -365,7 +381,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &1905370042603066086
 MonoBehaviour:
@@ -397,7 +413,20 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!95 &5993784087868471651
+--- !u!114 &1237847928603730799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6147038656828431697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8a7a1b05894e6a4cacdcd9bb096da42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Instance: {fileID: 3187680246583629482}
+--- !u!95 &5578330600058921374
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0

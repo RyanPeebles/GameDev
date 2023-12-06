@@ -10,11 +10,13 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject gameMusic;
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject levelEnd;
+    [SerializeField] playerControl player;
 
     public static bool GameIsPaused = false;
     public float setVolume;
     public TMP_Dropdown resolution;
     public TMP_Dropdown screenType;
+    public TMP_Text health;
     public string dropdownName;
     protected int width;
     protected int height;
@@ -25,6 +27,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
 
         /* if (!mainMenu)
          {
@@ -57,6 +60,12 @@ public class PauseMenu : MonoBehaviour
 
         }
 
+        health.text = "HP: " + player.health;
+
+        if (player.health <= 0)
+        {
+            Death();
+        }
     }
 
     public void Tutorial()
@@ -66,7 +75,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Death()
     {
-        gameMusic.SetActive(false);
+        //gameMusic.SetActive(false);
         deathMenu.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
