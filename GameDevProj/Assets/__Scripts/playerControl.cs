@@ -42,6 +42,13 @@ public class playerControl : basePlayer
         text.text = "Gold: " + goldValue;
         Instance = this;
         isSeen = false;
+        if (PlayerPrefs.GetInt("health") != 0) health = PlayerPrefs.GetInt("health");
+
+        if (PlayerPrefs.GetInt("gold") != 0)
+        {
+            goldValue = PlayerPrefs.GetInt("gold");
+            text.text = "Gold: " + goldValue;
+        }
     }
 
     // Update is called once per frame
@@ -85,6 +92,9 @@ public class playerControl : basePlayer
         {
             SpriteBlinkingEffect();
         }
+
+        PlayerPrefs.SetInt("health", health);
+        PlayerPrefs.SetInt("gold", goldValue);
     }
 
     public void increaseGold()
