@@ -20,6 +20,7 @@ public class PauseMenu : MonoBehaviour
     public string dropdownName;
     protected int width;
     protected int height;
+    public Timer time;
 
 
     public Slider sliderVal1;
@@ -53,7 +54,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if (levelEnd.GetComponent<LevelChange>().passPortal)
+        if (levelEnd.GetComponent<LevelChange>().passPortal && levelEnd.GetComponent<LevelChange>().gameEnder)
         {
             Time.timeScale = 0f;
             deathMenu.SetActive(true);
@@ -61,7 +62,10 @@ public class PauseMenu : MonoBehaviour
         }
 
         health.text = "HP: " + player.health;
-
+        if (time.totalTime <= 0)
+        {
+            Death();
+        }
         if (player.health <= 0)
         {
             Death();
@@ -76,6 +80,7 @@ public class PauseMenu : MonoBehaviour
     public void Death()
     {
         //gameMusic.SetActive(false);
+        PlayerPrefs.DeleteAll();
         deathMenu.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
