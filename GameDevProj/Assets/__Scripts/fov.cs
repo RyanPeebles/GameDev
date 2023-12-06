@@ -28,8 +28,9 @@ public class fov : MonoBehaviour
         if (this.b_gaurd.TYPE == type.wizard)
         {
             eye = this.transform.gameObject;
-            startAngle = angle;
+            
         }
+        this.startAngle = this.angle;
     }
     IEnumerator returnToSpot()
     {
@@ -112,7 +113,7 @@ public class fov : MonoBehaviour
         }
         catch
         {
-            this.angle = 45f;
+            this.angle = this.startAngle;
         }
         Vector3 OriginLocal = transform.InverseTransformPoint(Origin);
 

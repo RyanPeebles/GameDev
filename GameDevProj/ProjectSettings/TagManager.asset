@@ -9,6 +9,7 @@ TagManager:
   - gaurd
   - decor
   - walls
+  - king
   layers:
   - Default
   - TransparentFX
