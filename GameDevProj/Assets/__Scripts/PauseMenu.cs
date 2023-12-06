@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
 
 
     public Slider sliderVal1;
-
+    public bool mainmenu = false;
 
     private void Awake()
     {
@@ -38,10 +38,19 @@ public class PauseMenu : MonoBehaviour
         */
     }
 
+    public void Start()
+    {
+        if (mainmenu)
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.DeleteKey("time");
+        }
+    }
+
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !mainmenu)
         {
             if (GameIsPaused)
             {
@@ -64,12 +73,11 @@ public class PauseMenu : MonoBehaviour
         health.text = "HP: " + player.health;
         if (time.totalTime <= 0)
         {
-            PlayerPrefs.DeleteAll();
             Death();
         }
         if (player.health <= 0)
         {
-            PlayerPrefs.DeleteAll();
+
             Death();
         }
     }
@@ -120,6 +128,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Restart(int sceneID)
     {
+        PlayerPrefs.DeleteAll();
         Time.timeScale = 1f;
         SceneManager.LoadScene(sceneID);
         Time.timeScale = 1f;
