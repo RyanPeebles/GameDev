@@ -19,6 +19,7 @@ public class baseGaurd : baseUnit
     public bool playerSpotted = false;
     public int baseSpeed = 1;
     public playerControl player;
+    public Animator anim;
 
 
     public int cnt;
@@ -28,6 +29,7 @@ public class baseGaurd : baseUnit
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<playerControl>();
+        anim = this.GetComponent<Animator>();
 
         if (this.TYPE == type.gaurd)
         {
@@ -78,9 +80,10 @@ public class baseGaurd : baseUnit
     IEnumerator step(Vector3 tp)
     {
         this.transform.position = Vector3.MoveTowards(this.transform.position, tp, this.gspeed);
-
+        CalculateAngleForAnim(this.transform.position, tp);
         yield return new WaitUntil(() => (this.transform.position == tp));
         this.moving = false;
+        anim.SetTrigger("Idle");
     }
     public void move()
     {
@@ -144,4 +147,32 @@ public class baseGaurd : baseUnit
         else { this.chasing = false; this.FinalTarget = this.startTile; }
     }
 
+    private void CalculateAngleForAnim(Vector2 me, Vector2 target)
+    {
+        float angleBetween = AngleBetweenVector2(me, target);
+
+        if (angleBetween >= 45 && angleBetween < 135)
+        {
+            anim.SetTrigger("Up");
+        }
+        else if (angleBetween >= 135 || angleBetween < -135)
+        {
+            anim.SetTrigger("Left");
+        }
+        else if (angleBetween >= -135 && angleBetween < -45)
+        {
+            anim.SetTrigger("Down");
+        }
+        else if (angleBetween >= -45 && angleBetween < 45)
+        {
+            anim.SetTrigger("Right");
+        }
+    }
+
+    private float AngleBetweenVector2(Vector2 vec1, Vector2 vec2)
+    {
+        Vector2 diference = vec2 - vec1;
+        float sign = (vec2.y < vec1.y) ? -1.0f : 1.0f;
+        return Vector2.Angle(Vector2.right, diference) * sign;
+    }
 }

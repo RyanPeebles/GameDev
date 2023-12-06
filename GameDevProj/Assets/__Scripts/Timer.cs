@@ -28,6 +28,7 @@ public class Timer : MonoBehaviour
             {
                 totalTime -= Time.deltaTime;
                 time_elapsed = initial_value - totalTime;
+                PlayerPrefs.DeleteAll();
             }
             min = Mathf.FloorToInt(totalTime / 60);
             sec = Mathf.FloorToInt(totalTime % 60);
