@@ -129,6 +129,16 @@ public class playerControl : basePlayer
         }
     }
 
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+
+        pickupable = false;
+        item = null;
+        item2 = null;
+
+    }
+
     public void StarLevel()
     {
         StartCoroutine(Delay());

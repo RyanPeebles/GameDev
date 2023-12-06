@@ -16,6 +16,7 @@ public class PauseMenu : MonoBehaviour
     public float setVolume;
     public TMP_Dropdown resolution;
     public TMP_Dropdown screenType;
+    public TMP_Text health;
     public string dropdownName;
     protected int width;
     protected int height;
@@ -26,6 +27,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
 
         /* if (!mainMenu)
          {
@@ -57,6 +59,9 @@ public class PauseMenu : MonoBehaviour
             deathMenu.SetActive(true);
 
         }
+
+        health.text = "HP: " + player.health;
+
         if (player.health <= 0)
         {
             Death();

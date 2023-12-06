@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class DeathScreen : MonoBehaviour
         goldText.text = "You colledted " + goldAmount.ToString() + " gold!";
         timeTaken = timer.time_elapsed;
         totalScore = goldAmount * (1 / timeTaken) * 10;
-        totalText.text = "You scored " + totalScore.ToString() + " points!";
+        totalText.text = "You scored " + Math.Round(totalScore).ToString() + " points!";
 
     }
 }
