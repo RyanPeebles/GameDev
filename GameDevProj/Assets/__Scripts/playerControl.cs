@@ -25,6 +25,7 @@ public class playerControl : basePlayer
     public bool blinking = false;
     public bool isPicking = false;
     public bool blink2;
+    public bool trouble = false;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,10 @@ public class playerControl : basePlayer
         {
             StartCoroutine(waitFive());
         }
+        else if (isSeen && running)
+        {
+            StopCoroutine(waitFive());
+        }
         if (Input.GetKeyDown(KeyCode.E) && pickupable)
         {
             pickup();
@@ -50,14 +55,17 @@ public class playerControl : basePlayer
         }
         if (stealthed.Instance.stealth == stealth.stealthMode && isSeen && !running)
         {
-            StarLevel();
             running = true;
+            StarLevel();
+
         }
         else if (stealthed.Instance.stealth == stealth.StandMode && isSeen && isPicking)
         {
+            trouble = true;
             for (int i = 0; i <= 4; i++)
             {
                 stars[i].GetComponent<Image>().color = Color.white;
+                starNum++;
             }
             running = true;
         }
@@ -106,15 +114,11 @@ public class playerControl : basePlayer
     public void StarLevel()
     {
         StartCoroutine(Delay());
-
     }
 
     IEnumerator Delay()
     {
-        while (stars[starNum].GetComponent<Image>().color == Color.white)
-        {
-            starNum++;
-        }
+
         Debug.Log("start blinking");
         blinking = true;
         StartCoroutine(Blink());
@@ -156,12 +160,14 @@ public class playerControl : basePlayer
     IEnumerator waitFive()
     {
         yield return new WaitForSeconds(5f);
-        running = false;
+        StopCoroutine(Delay());
+        StopCoroutine(Blink());
         for (int i = 4; i >= 0; i--)
         {
             stars[i].GetComponent<Image>().color = Color.black;
             starNum = i;
         }
+        running = false;
         yield break;
     }
 }

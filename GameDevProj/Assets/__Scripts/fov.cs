@@ -159,7 +159,7 @@ public class fov : MonoBehaviour
                     //this.b_gaurd.playerSpotted = true;
 
                     this.b_gaurd.FinalTarget = p.GetComponent<baseUnit>().tile;
-                    if (p.GetComponent<movement>().stealth == stealth.stealthMode)
+                    if (p.GetComponent<movement>().stealth == stealth.stealthMode || player.trouble || (player.starNum - 1) > 0)
                     {
                         if (this.b_gaurd.playerSpotted && this.b_gaurd.path != null) { this.b_gaurd.path = null; }
                         if (this.b_gaurd.path == null)
