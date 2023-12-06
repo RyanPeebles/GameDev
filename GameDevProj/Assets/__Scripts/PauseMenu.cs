@@ -54,6 +54,7 @@ public class PauseMenu : MonoBehaviour
         {
             Time.timeScale = 0f;
             deathMenu.SetActive(true);
+
         }
 
     }

@@ -9,26 +9,27 @@ public class footColScript : MonoBehaviour
     public Transform tr2;
     public bool colliding = false;
     public float speed = 1f;
-    public int baseSpeed = 1;
+    public int baseSpeed = 2;
     [SerializeField] public footColScript Instance;
-    public playerControl player;
-
+    public Animator Player_anim;
     // Start is called before the first frame update
+    // private Animator anim;
+
     void Start()
     {
+        //anim = GetComponent<Animator>();
+        Player_anim = this.transform.parent.gameObject.GetComponent<Animator>();
         Instance = this;
         Instance.daddy = Instance.transform.parent.gameObject;
         if (Instance.daddy.tag == "gaurd")
         {
             Instance.bgaurd = daddy.GetComponent<baseGaurd>();
-            player = GameObject.Find("Player").GetComponent<playerControl>();
         }
         if (Instance.daddy.tag == "Player")
         {
             Instance.bPlayer = daddy.GetComponent<playerControl>();
             Instance.tr = daddy.GetComponent<Transform>();
             Instance.tr2 = Instance.GetComponent<Transform>();
-            baseSpeed = 2;
             speed = 1 * baseSpeed;
         }
     }
@@ -36,7 +37,6 @@ public class footColScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         if (Instance.bPlayer != null && this.colliding == false)
         {
             if (Instance.tr2.localPosition != Vector3.zero)
@@ -49,25 +49,49 @@ public class footColScript : MonoBehaviour
             {
 
                 Instance.tr.Translate(new Vector3(1f, 0, 0) * Time.deltaTime * speed);
+                Debug.Log("set left");
+                Player_anim.SetBool("right", true);
+            }
+            else
+            {
+                Player_anim.SetBool("right", false);
             }
             if (Input.GetKey("up"))
             {
 
                 Instance.tr.Translate(new Vector3(0f, 1f, 0) * Time.deltaTime * speed);
+                Player_anim.SetBool("backward", true);
+            }
+            else
+            {
+                Player_anim.SetBool("backward", false);
             }
             if (Input.GetKey("down"))
             {
 
 
                 Instance.tr.Translate(new Vector3(0f, -1f, 0) * Time.deltaTime * speed);
+                Player_anim.SetBool("foward", true);
+            }
+            else
+            {
+                Player_anim.SetBool("foward", false);
             }
             if (Input.GetKey("left") && !Input.GetKey("right"))
             {
 
 
                 Instance.tr.Translate(new Vector3(-1f, 0, 0) * Time.deltaTime * speed);
+                Player_anim.SetBool("left", true);
             }
+            else
+            {
+                Player_anim.SetBool("left", false);
+            }
+
+
         }
+
 
     }
 
@@ -79,7 +103,7 @@ public class footColScript : MonoBehaviour
             if (!this.colliding)
             {
                 this.colliding = true;
-                speed = 0 * baseSpeed;
+                speed = 0;
             }
 
 
@@ -92,7 +116,7 @@ public class footColScript : MonoBehaviour
             if (this.colliding)
             {
 
-                speed = -1;
+                speed = -1 * baseSpeed;
                 this.colliding = false;
             }
 

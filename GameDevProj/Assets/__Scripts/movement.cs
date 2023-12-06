@@ -5,17 +5,18 @@ public class movement : basePlayer
     public GameManager gm;
     public Transform tr;
     public int speed = 1;
-    
+
 
     [SerializeField] public basePlayer Instance;
     public playerControl pc;
-
+    public Animator anim;
 
     //public EventSystem es;
 
     // Start is called before the first frame update
     void Start()
     {
+        //anim = GetComponent<Animator>();
         Instance = this;
         Instance.character.spr = Instance.GetComponent<SpriteRenderer>();
         tr = Instance.GetComponent<Transform>();
@@ -31,50 +32,55 @@ public class movement : basePlayer
     void Update()
     {
         Instance.tile = pc.tile;
-     
-       
+        //UpdateAnimation();
+
+
+
         if (Input.GetKeyDown("c"))
         {
             if (Instance.stealth == stealth.StandMode)
             {
                 Instance.stealth = stealth.stealthMode;
+                anim.SetBool("crouch", true);
 
                 Debug.Log("crouch");
             }
             else
             {
                 Instance.stealth = stealth.StandMode;
-
+                anim.SetBool("crouch", false);
             }
 
         }
-        
+
+
+
 
         if (Input.GetKey("right"))
         {
             this.changeSkin("right");
-            
+
         }
         if (Input.GetKey("up"))
         {
             this.changeSkin("up");
-          
+
         }
         if (Input.GetKey("down"))
         {
             this.changeSkin("down");
 
-            
+
         }
         if (Input.GetKey("left"))
         {
-           
+
             this.changeSkin("left");
-           
-         
+
+
+        }
     }
-    }
-   
+
     public void changeSkin(string dir)
     {
         if (Instance.stealth == stealth.stealthMode)
@@ -119,4 +125,25 @@ public class movement : basePlayer
         }
 
     }
+
+    public void UpdateAnimation()
+    {
+        if (Input.GetKey("right"))
+        {
+            anim.SetBool("right", true);
+        }
+        else if (Input.GetKey("up"))
+        {
+            anim.SetBool("backward", true);
+        }
+        else if (Input.GetKey("down"))
+        {
+            anim.SetBool("foward", true);
+        }
+        else if (Input.GetKey("left"))
+        {
+            anim.SetBool("left", true);
+        }
+    }
 }
+
