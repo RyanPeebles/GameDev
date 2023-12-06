@@ -49,7 +49,7 @@ public class tileInfo : ScriptableObject{
             try{
             Instance.rb = Instance.obj.GetComponent<Rigidbody2D>();
             Instance.rb.gravityScale = 0;
-            Instance.col.isTrigger = false;
+            
             }
             catch(Exception e){
                 return;
