@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !mainmenu)
+        if (Input.GetKeyDown(KeyCode.Tab) && !mainmenu)
         {
             if (GameIsPaused)
             {
