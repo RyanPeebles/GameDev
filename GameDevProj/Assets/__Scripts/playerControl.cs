@@ -23,6 +23,8 @@ public class playerControl : basePlayer
     public bool running = false;
     int starNum = 0;
     public bool blinking = false;
+    public bool isPicking = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,20 +38,29 @@ public class playerControl : basePlayer
     // Update is called once per frame
     void Update()
     {
-
+        if (!isSeen && running)
+        {
+            StartCoroutine(waitFive());
+        }
         if (Input.GetKeyDown(KeyCode.E) && pickupable)
         {
             pickup();
+            isPicking = true;
         }
         if (stealthed.Instance.stealth == stealth.stealthMode && isSeen && !running)
         {
             StarLevel();
+            running = true;
         }
-        else if (stealthed.Instance.stealth == stealth.StandMode && isSeen)
+        else if (stealthed.Instance.stealth == stealth.StandMode && isSeen && isPicking)
         {
-
+            for (int i = 0; i <= 4; i++)
+            {
+                stars[i].GetComponent<Image>().color = Color.white;
+            }
+            running = true;
         }
-
+        isPicking = false;
     }
 
     public void increaseGold()
@@ -60,9 +71,11 @@ public class playerControl : basePlayer
 
     public void pickup()
     {
+        isPicking = true;
         increaseGold();
         item2.SetActive(false);
         pickupable = false;
+
     }
 
     public void OnTriggerEnter2D(Collider2D coll)
@@ -88,11 +101,15 @@ public class playerControl : basePlayer
     public void StarLevel()
     {
         StartCoroutine(Delay());
-        running = true;
+
     }
 
     IEnumerator Delay()
     {
+        while (stars[starNum].GetComponent<Image>().color == Color.white)
+        {
+            starNum++;
+        }
         Debug.Log("start blinking");
         blinking = true;
         StartCoroutine(Blink());
@@ -129,5 +146,16 @@ public class playerControl : basePlayer
         {
             stars[starNum].GetComponent<Image>().color = Color.white;
         }
+    }
+
+    IEnumerator waitFive()
+    {
+        yield return new WaitForSeconds(5f);
+        running = false;
+        for (int i = 4; i >= 0; i--)
+        {
+            stars[i].GetComponent<Image>().color = Color.black;
+        }
+        yield break;
     }
 }
