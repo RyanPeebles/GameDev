@@ -212,12 +212,14 @@ public class TileManager : MonoBehaviour
 
 
         public static List<GameObject> FindPath(GameObject start, GameObject target){
-            Debug.Log("finding path");
+            //Debug.Log("finding path");
           
         var toSearch = new List<GameObject>() {start};
         var processed = new List<GameObject>();
-       
+ 
         var targetInfo = TileManager.tileList[target.name];
+       
+    
         while(toSearch.Any()){
             var current = toSearch[0];
          
@@ -253,7 +255,7 @@ public class TileManager : MonoBehaviour
                     
                     }
                     path.Reverse();
-                    Debug.Log("Path Found");
+                   // Debug.Log("Path Found");
                     return path;
                     }
                     
@@ -278,7 +280,7 @@ public class TileManager : MonoBehaviour
                     }
                     }
                 }
-                Debug.Log("fail");
+               //Debug.Log("fail");
                 return null;
             }
 
