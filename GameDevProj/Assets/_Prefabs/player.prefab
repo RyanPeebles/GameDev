@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8173178062309199376}
   - component: {fileID: 3626584268156728736}
   - component: {fileID: 5258585040578120372}
+  - component: {fileID: 1535925288742836058}
   m_Layer: 2
   m_Name: feet
   m_TagString: Untagged
@@ -126,6 +127,27 @@ MonoBehaviour:
   colliding: 0
   speed: 1
   Instance: {fileID: 0}
+--- !u!95 &1535925288742836058
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3532675126379136743}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e32b332f42754ede9b56017e4d5ed6f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6147038656828431697
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +282,19 @@ MonoBehaviour:
   item: {fileID: 0}
   text: {fileID: 0}
   Instance: {fileID: 0}
+  stealthed: {fileID: 0}
+  guardCheck: {fileID: 0}
+  isSeen: 0
+  stars: []
+  interval: 5
+  time: {fileID: 0}
+  initialTime: 0
+  running: 0
+  starNum: 0
+  blinking: 0
+  isPicking: 0
+  blink2: 0
+  trouble: 0
 --- !u!61 &6128317707766162609
 BoxCollider2D:
   m_ObjectHideFlags: 0
