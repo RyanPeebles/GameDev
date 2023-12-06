@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject deathMenu;
     [SerializeField] GameObject gameMusic;
     [SerializeField] GameObject settingsMenu;
+    [SerializeField] GameObject levelEnd;
 
     public static bool GameIsPaused = false;
     public float setVolume;
@@ -17,6 +18,7 @@ public class PauseMenu : MonoBehaviour
     public string dropdownName;
     protected int width;
     protected int height;
+
 
     public Slider sliderVal1;
 
@@ -48,6 +50,11 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
+        if (levelEnd.GetComponent<LevelChange>().passPortal)
+        {
+            Time.timeScale = 0f;
+            deathMenu.SetActive(true);
+        }
 
     }
 
