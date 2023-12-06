@@ -21,9 +21,10 @@ public class playerControl : basePlayer
     public Timer time;
     public float initialTime;
     public bool running = false;
-    int starNum = 0;
+    public int starNum = 0;
     public bool blinking = false;
     public bool isPicking = false;
+    public bool blink2;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +62,10 @@ public class playerControl : basePlayer
             running = true;
         }
         isPicking = false;
+        if (starNum > 4)
+        {
+            starNum = 4;
+        }
     }
 
     public void increaseGold()
@@ -114,12 +119,12 @@ public class playerControl : basePlayer
         blinking = true;
         StartCoroutine(Blink());
         yield return new WaitForSeconds(5f);
-        blinking = false;
         StopCoroutine(Blink());
+        blinking = false;
         stars[starNum].GetComponent<Image>().color = Color.white;
         starNum++;
         Debug.Log("make next blink");
-        if (isSeen)
+        if (isSeen && starNum <= 4)
         {
             StartCoroutine(Delay());
         }
@@ -131,7 +136,7 @@ public class playerControl : basePlayer
         while (blinking)
         {
             Blinking();
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.3f);
         }
 
     }
@@ -155,6 +160,7 @@ public class playerControl : basePlayer
         for (int i = 4; i >= 0; i--)
         {
             stars[i].GetComponent<Image>().color = Color.black;
+            starNum = i;
         }
         yield break;
     }
