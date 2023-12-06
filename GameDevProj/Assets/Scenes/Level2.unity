@@ -32506,6 +32506,7 @@ MonoBehaviour:
   gameMusic: {fileID: 0}
   settingsMenu: {fileID: 0}
   levelEnd: {fileID: 103936386}
+  player: {fileID: 0}
   setVolume: 0
   resolution: {fileID: 0}
   screenType: {fileID: 0}
@@ -32561,7 +32562,7 @@ Animator:
   m_GameObject: {fileID: 1120154000}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6e32b332f42754ede9b56017e4d5ed6f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -50659,6 +50660,10 @@ PrefabInstance:
       propertyPath: m_UIInputModule
       value: 
       objectReference: {fileID: 937969610}
+    - target: {fileID: 3187680246583629482, guid: 0404ae14f35fe1d4f87b150ddc27574e, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1407767204}
     - target: {fileID: 3532675126379136743, guid: 0404ae14f35fe1d4f87b150ddc27574e, type: 3}
       propertyPath: m_Layer
       value: 3
