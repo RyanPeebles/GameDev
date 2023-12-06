@@ -145,7 +145,15 @@ public class playerControl : basePlayer
             StartCoroutine(DamageDelay());
         }
     }
-
+    private void OnTriggerStay2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "Item")
+        {
+            pickupable = true;
+            item = coll.gameObject.GetComponent<BaseItem>();
+            item2 = coll.gameObject;
+        }
+    }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
