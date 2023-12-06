@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Eye
+  m_Name: EyeOpen
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -22,16 +22,6 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: -926842926822294746, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - time: 0.16666667
-      value: {fileID: 3436138205921184866, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - time: 0.33333334
-      value: {fileID: -5058858657004855473, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - time: 0.5
-      value: {fileID: -2504438638005451297, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - time: 0.6666667
-      value: {fileID: -5058858657004855473, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - time: 0.8333333
-      value: {fileID: 3436138205921184866, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
     - time: 1
       value: {fileID: -926842926822294746, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
     attribute: m_Sprite
@@ -57,11 +47,6 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: -926842926822294746, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - {fileID: 3436138205921184866, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - {fileID: -5058858657004855473, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - {fileID: -2504438638005451297, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - {fileID: -5058858657004855473, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
-    - {fileID: 3436138205921184866, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
     - {fileID: -926842926822294746, guid: d2c78f8c5edd9ca40a049e49c959dcf1, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
