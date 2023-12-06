@@ -21,9 +21,11 @@ public class playerControl : basePlayer
     public Timer time;
     public float initialTime;
     public bool running = false;
-    int starNum = 0;
+    public int starNum = 0;
     public bool blinking = false;
     public bool isPicking = false;
+    public bool blink2;
+    public bool trouble = false;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +44,10 @@ public class playerControl : basePlayer
         {
             StartCoroutine(waitFive());
         }
+        else if (isSeen && running)
+        {
+            StopCoroutine(waitFive());
+        }
         if (Input.GetKeyDown(KeyCode.E) && pickupable)
         {
             pickup();
@@ -49,18 +55,25 @@ public class playerControl : basePlayer
         }
         if (stealthed.Instance.stealth == stealth.stealthMode && isSeen && !running)
         {
-            StarLevel();
             running = true;
+            StarLevel();
+
         }
         else if (stealthed.Instance.stealth == stealth.StandMode && isSeen && isPicking)
         {
+            trouble = true;
             for (int i = 0; i <= 4; i++)
             {
                 stars[i].GetComponent<Image>().color = Color.white;
+                starNum++;
             }
             running = true;
         }
         isPicking = false;
+        if (starNum > 4)
+        {
+            starNum = 4;
+        }
     }
 
     public void increaseGold()
@@ -101,25 +114,21 @@ public class playerControl : basePlayer
     public void StarLevel()
     {
         StartCoroutine(Delay());
-
     }
 
     IEnumerator Delay()
     {
-        while (stars[starNum].GetComponent<Image>().color == Color.white)
-        {
-            starNum++;
-        }
+
         Debug.Log("start blinking");
         blinking = true;
         StartCoroutine(Blink());
         yield return new WaitForSeconds(5f);
-        blinking = false;
         StopCoroutine(Blink());
+        blinking = false;
         stars[starNum].GetComponent<Image>().color = Color.white;
         starNum++;
         Debug.Log("make next blink");
-        if (isSeen)
+        if (isSeen && starNum <= 4)
         {
             StartCoroutine(Delay());
         }
@@ -131,7 +140,7 @@ public class playerControl : basePlayer
         while (blinking)
         {
             Blinking();
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(.3f);
         }
 
     }
@@ -151,11 +160,14 @@ public class playerControl : basePlayer
     IEnumerator waitFive()
     {
         yield return new WaitForSeconds(5f);
-        running = false;
+        StopCoroutine(Delay());
+        StopCoroutine(Blink());
         for (int i = 4; i >= 0; i--)
         {
             stars[i].GetComponent<Image>().color = Color.black;
+            starNum = i;
         }
+        running = false;
         yield break;
     }
 }
