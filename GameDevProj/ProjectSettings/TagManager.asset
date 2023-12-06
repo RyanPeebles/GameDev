@@ -10,6 +10,7 @@ TagManager:
   - decor
   - walls
   - king
+  - princess
   layers:
   - Default
   - TransparentFX
